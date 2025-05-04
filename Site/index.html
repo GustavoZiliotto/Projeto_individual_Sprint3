@@ -3,17 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style_index.css">
-    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <title>Index</title>
 </head>
 <body>
     <header class="cabeçalho">
         <div class="loginECadastro"> 
-            <span style="margin-right: 50px;" onclick="funcLogin()">Login</span>
-            <span onclick="funcCadastro()">Cadastro</span>
+            <span style="margin-right: 50px;" onclick="funcLogin()">Acesso corretor</span>
         </div>
     </header>
-    <div class="conteudo conteudo1">
+    <div class="conteudo conteudo1" style="background-image: url(fundo_cads2.jpg); background-repeat: no-repeat; background-size: cover;">
 
         <div class="card esquerda">
         <p class="texto_card"> <span style="font-size: 50px;"> Origem dos seguros: </span> <br> <br>
@@ -63,10 +62,6 @@
 
 <script>
     function funcLogin () {
-
-    }
-
-    function funcCadastro () {
-        
+        window.location.href = "login.html"
     }
 </script>

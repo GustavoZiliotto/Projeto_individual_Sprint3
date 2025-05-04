@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Login</title>
+</head>
+<body class="box fundo_login">
+<div class="card_login">
+    <span class="texto_titulo">Realize seu login</span><br>
+    <input class="input" placeholder="susep" type="text" id="ipt_susep"><br>
+    <input class="input" placeholder="cpf" type="text" id="ipt_cpf"><br>
+    <input class="input" placeholder="senha" type="text" id="ipt_senha"><br>
+    <button class="input" id="button_login">Realizar Login</button>
+    <label for="button_login" onclick="cadastro()" style="color: blue;">Criar conta</label>
+</div>
+</body>
+<script>
+    function cadastro() {
+     window.location.href = "cadastro.html"
+    }
+</script>
+</html>
