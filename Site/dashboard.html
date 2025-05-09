@@ -18,6 +18,7 @@
 
   </div>
 
+  <div class="header cabeçalho"></div>
 
     <div class="sidebar">
 
@@ -30,6 +31,51 @@
     <section class="grafipizza">
         <canvas style="width: 100%; height: 100%;" id="grafico_de_pizza"></canvas>
     </section>
+
+    <div class="espaço_direita"></div>
+
+    <div class="lista_container">
+      <div class="lista">
+        <h3>Solicitações</h3>
+        <table border="solid">
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Nome</th>
+              <th>Numero</th>
+              <th>Email</th>
+              <th>Mensagem</th>
+              <th>Idade</th>
+              <th>Tipo de cotação enviada</th>
+              <th>Tipo de seguro fechado</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>13/05/25</td>
+              <td>João</td>
+              <td>11 9999999</td>
+              <td>teste@gmail.com</td>
+              <td>Quero cotação</td>
+              <td>29</td>
+              <td>
+                <input type="checkbox" name="cotação" value="auto">Auto <br>
+                <input type="checkbox" name="cotação" value="saude">Saúde <br>
+                <input type="checkbox" name="cotação" value="outros">Outros <br>
+              </td>
+
+              <td>
+                <input type="checkbox" name="apolice" value="auto">Auto <br>
+                <input type="checkbox" name="apolice" value="saude">Saúde <br>
+                <input type="checkbox" name="apolice" value="outros">Outros <br>
+              </td>
+            </tr>
+
+
+      </div>
+    </div>
+
     
 
 </body>
