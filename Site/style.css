@@ -170,7 +170,7 @@
     /* -------------------- Dashboard -------------------------------- */
 
 .grid {
-    
+
     display: grid;
 
 
@@ -224,4 +224,16 @@
 
 .kpi_container {
     grid-area: kpi;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.kpi_filho {
+    background: #e0f7fa;
+    width: 20%;
+    height: 30px;
+    margin-top: 10px;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
 }
