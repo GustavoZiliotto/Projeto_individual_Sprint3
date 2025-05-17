@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
     <title>Login</title>
 </head>
 <body class="box fundo_login">
 <div class="card_login">
     <span class="texto_titulo">Realize seu cadastro</span><br>
-    <input class="input" placeholder="email" type="text" id="ip_email"> <br>
-    <input class="input" placeholder="susep" type="text" id="ip_susep"><br>
-    <input class="input" placeholder="cpf" type="text" id="ip_cpf"><br>
-    <input class="input" placeholder="senha" type="text" id="ip_senha"><br>
-    <input class="input" placeholder="confirmar senha" type="text" id="ip_senha2"><br>
-    <button class="input" id="button_login">Criar conta</button>
+    <input class="input" placeholder="email" type="text" id="ipt_email"> <br>
+    <input class="input" placeholder="susep" type="text" id="ipt_codigo"><br>
+    <input class="input" placeholder="cpf" type="text" id="ipt_cpf"><br>
+    <input class="input" placeholder="senha" type="password" id="ipt_senha"><br>
+    <input class="input" placeholder="confirmar senha" type="password" id="ipt_senha2"><br>
+    <button class="input" id="button_login" onclick="cadastrar()">Criar conta</button>
     <span onclick="login()" style="color: blue;">Realizar login</span>
 </div>
 </body>
@@ -22,25 +22,37 @@
     function login() {
      window.location.href = "login.html"
     }
+</script>
+</html>
 
+  <!--footer inicio--
+  <div class="footer">
+    <div class="container">
+      <h4>Feito com amor por aluno &hearts; SPTech &copy; 2023</h4>
+      <span class="version">v1.0.0</span>
+    </div>
+  </div>
+  -->
+</body>
 
-//----------------------------------------------------- API: -----------------------------------------------------------------------------------
+</html>
 
+<script>
 
   // Array para armazenar empresas cadastradas para validação de código de ativação 
-  let listaCorretoresCadastradas = [];
+  let listaSusepCadastradas = [];
 
   function cadastrar() {
     // aguardar();
 
     //Recupere o valor da nova input pelo nome do id
     // Agora vá para o método fetch logo abaixo
-    var emailVar = ipt_email.value;
     var cpfVar = ipt_cpf.value;
+    var emailVar = ipt_email.value;
     var senhaVar = ipt_senha.value;
-    var confirmacaoSenhaVar = ipt_senha2.value
-    var codigoVar = ipt_susep.value;
-    var idCorretorVincular
+    var confirmacaoSenhaVar = ipt_senha2.value;
+    var codigoVar = ipt_codigo.value;
+   // var idEmpresaVincular
 
     // Verificando se há algum campo em branco
     if (
@@ -48,7 +60,8 @@
       emailVar == "" ||
       senhaVar == "" ||
       confirmacaoSenhaVar == "" ||
-      codigoVar == ""
+      codigoVar == "" ||
+      confirmacaoSenhaVar != senhaVar
     ) {
       cardErro.style.display = "block";
       mensagem_erro.innerHTML =
@@ -60,19 +73,24 @@
       setInterval(sumirMensagem, 5000);
     }
 
-    // Verificando se o código de ativação é de alguma empresa cadastrada
-    for (let i = 0; i < listaCorretoresCadastradas.length; i++) {
-      if (listaCorretoresCadastradas[i].codigo_ativacao == codigoVar) {
-        idCorretorVincular = listaCorretoresCadastradas[i].id
-        console.log("Código de ativação válido.");
-        break;
-      } else {
-        cardErro.style.display = "block";
-        mensagem_erro.innerHTML = "(Susep já cadastrada)";
-        finalizarAguardar();
-      }
-    }
+    // Verificando se o código de ativação é de alguma empresa cadastrada 
 
+    var contador = 0;
+    
+    for (let i = 0; i < listaSusepCadastradas.length; i++) {
+      if (listaSusepCadastradas[i].codigo_ativacao != codigoVar) {
+        contador++;      
+      } 
+    }
+    if(contador == listaSusepCadastradas.length) {
+    console.log("Código de ativação válido.");
+    } 
+    else {
+      cardErro.style.display = "block";
+      mensagem_erro.innerHTML = "(Mensagem de erro para código inválido)";
+      finalizarAguardar();
+    }
+    
     // Enviando o valor da nova input
     fetch("/usuarios/cadastrar", {
       method: "POST",
@@ -85,8 +103,7 @@
         cpfServer: cpfVar,
         emailServer: emailVar,
         senhaServer: senhaVar,
-        codigoServer: codigoVar,
-        idCorretorVincularServer: idCorretorVincular
+        codigoServer: codigoVar
       }),
     })
       .then(function (resposta) {
@@ -100,7 +117,7 @@
 
           setTimeout(() => {
             window.location = "login.html";
-          }, "2000");
+          }, 2000);
 
           limparFormulario();
           finalizarAguardar();
@@ -116,18 +133,18 @@
     return false;
   }
 
-// Listando corretores cadastradas 
-function listar() {
+  // Listando empresas cadastradas 
+  function listar() {
     fetch("/empresas/listar", {
       method: "GET",
     })
       .then(function (resposta) {
         resposta.json().then((empresas) => {
           empresas.forEach((empresa) => {
-            listaEmpresasCadastradas.push(empresa);
+            listaSusepCadastradas.push(empresa);
 
-            console.log("listaCorretorCadastradas")
-            console.log(listaCorretorCadastradas[0].codigo_ativacao)
+            console.log("listaSusepCadastradas")
+            console.log(listaSusepCadastradas[0].codigo_ativacao)
           });
         });
       })
@@ -140,7 +157,3 @@ function listar() {
     cardErro.style.display = "none";
   }
 </script>
-
-
-
-</html>
