@@ -3,10 +3,11 @@ use projeto_indi_sprint3;
 
 create table usuario (
 id int primary key auto_increment,
-susep varchar (20),
-cpf char(11),
-senha varchar(45),
-unique (susep));
+codigo varchar (50),
+email varchar (50),
+cpf varchar(50),
+senha varchar(50),
+unique (codigo));
 
 create table leads (
 id int primary key auto_increment,
@@ -25,5 +26,11 @@ cotacao char(1),
 apolice char (1),
 primary key (fkusuario, fklead));
 
+create user if not exists site_seguros identified by 'Sptech#2024';
+grant all privileges on projeto_indi_sprint3 to site_seguros;
+
+select * from usuario;
 
 
+
+ INSERT INTO usuario (codigo, email, cpf, senha) VALUES ('${codigo}', '${email}', '${cpf}', '${senha}')
