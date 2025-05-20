@@ -1,82 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>AquaTech | Página Inicial</title>
-
-    <script src="./js/sessao.js"></script>
-
-    <link rel="stylesheet" href="./css/estilo.css">
-    <link rel="icon" href="./assets/icon/favicon2.ico">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Index</title>
 </head>
-
 <body>
-    <div class="header">
-      <div class="container">
-        <h1 class="titulo">AquaTech</h1>
-        <ul class="navbar">
-          <li class="agora">
-            <a href="#">Inicial</a>
-          </li>
-          <li>
-            <a href="simulador.html">Simulador</a>
-          </li>
-          <li>|</li>
-          <li>
-            <a href="login.html">Login</a>
-          </li>
-          <li>
-            <a href="cadastro.html">Cadastro</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  
-    <div class="banner">
-      <div class="container">
-        <p>Preservando <span>hoje</span> para existirem <span>amanhã</span>.</p>
-      </div>
-    </div>
-  
-    <div class="social">
-      <div class="container">
-        <div class="boxes">
-          <div class="box">
-            <img src="assets/imgs/planet-earth_color.png">
-            <h4>Missão</h4>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Et, quas cupiditate asperiores provident magnam
-              vitae illum iusto fugiat atque deleniti nulla sed iure suscipit, laborum, aliquid accusantium cum dicta
-              minima.</p>
-          </div>
-          <div class="box">
-            <img src="assets/imgs/lightbulb_color.png">
-            <h4>Visão</h4>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Et, quas cupiditate asperiores provident magnam
-              vitae illum iusto fugiat atque deleniti nulla sed iure suscipit, laborum, aliquid accusantium cum dicta
-              minima.</p>
-          </div>
-          <div class="box">
-            <img src="assets/imgs/growth_color.png">
-            <h4>Valores</h4>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Et, quas cupiditate asperiores provident magnam
-              vitae illum iusto fugiat atque deleniti nulla sed iure suscipit, laborum, aliquid accusantium cum dicta
-              minima.</p>
-          </div>
+    <header class="'cabeçalho'">
+        <div class="loginECadastro"> 
+            <span style="margin-right: 50px;" onclick="funcLogin()">Acesso corretor</span>
         </div>
-      </div>
-    </div>
-  
-    <div class="footer">
-      <div class="container">
-        <h4>Feito com amor por aluno &hearts; SPTech &copy; 2023</h4>
-        <span class="version">v1.0.0</span>
-      </div>
-    </div>
-  </body>
+    </header>
+    <div class="conteudo conteudo1" style="background-image: url(assets/fundo_cads2.jpg); background-repeat: no-repeat; background-size: cover;">
 
+        <div class="card esquerda">
+        <p class="texto_card"> <span style="font-size: 50px;"> Origem dos seguros: </span> <br> <br>
+            Os seguros foram criados antes da época das Grandes Navegações, surgindo como um acordo informal entre os cameleiros, que devido à alta taxa de camelos que morriam durante as travessias dos desertos orientais, eles se propunham a dividir entre os participantes da travessia o valor do animal morto e pagá-lo ao seu dono. 
+       <br> Com o avanço das grandes navegações, essa prática se expandiu de maneira similar com as grandes embarcações, criando em 1347, em Gênova, a primeira apólice formal de seguro, que justamente criava um acordo de proteção à embarcação italiana.          </p>
+        </div>
+
+        <div class="card meio">
+            <p class="texto_card"> <span style="font-size: 50px;"> Seguros na atualidade: </span> <br> <br>
+                Atualmente, os seguros são de extrema importância, pois são responsáveis por oferecerem proteção financeira e tranquilidade, protegendo contra riscos inesperados e garantindo a estabilidade financeira em situações de emergência. <br>
+                Prova de sua importância, é que no Brasil existem seguros obrigatórios, como, por exemplo, o DPVAT  que visa garantir indenizações a vítimas de acidentes de trânsito ou o Seguro de Responsabilidade Civil para Obras Exigido em muitos contratos públicos e privados para autorizar a execução de obras, cobrindo danos materiais ou corporais a terceiros durante a construção. 
+            </p>
+            </div>
+        
+        <div class="card direita">
+            <p class="texto_card"> <span style="font-size: 50px;">Principais seguros da atualidade:</span> <br><br> 
+                Atualmente, os seguros mais contratados são os de  <span style="color: blue;">automóvel</span> e os de <span style="color: red;"> saúde </span>. O de automóvel <span style="color: blue;">cobre roubo, colisões e danos a terceiros</span>, sendo altamente personalizado: seu valor varia conforme o modelo do carro, perfil do condutor, local de residência e histórico de direção. Já o de saúde, que <span style="color: red;"> protege o seu bem mais valioso — A VIDA —</span>, tem seu custo  definido principalmente pela idade do contratante. Esses dois tipos de seguros mostram como o setor evoluiu, unindo proteção sob medida com acessibilidade para diferentes perfis.</div>
+
+            
+        </div>
+        </div>
+
+
+    </div>
+
+    <div class="conteudo conteudo2" style="background-image: url(assets/fund_cotacao.jpg); background-repeat: no-repeat; background-size: cover;">
+        <h1 class="titulo_cotacao" style="color: white; margin-top: 1%; font-size: 60px;">Solicite uma cotação</h1>
+        
+        <div class="card dados" style="justify-self: center;"> 
+
+        <input class="input" type="text" placeholder="Nome de contato" id="ipt_nome"> <br> 
+        <input class="input" type="number" placeholder="Numero para contato" id="ipt_celular"> <br>
+        <input class="input" type="text" placeholder="E-mail para contato" id="ipt_email"> <br>
+        <input class="input"type="text" placeholder="Mensagem da solicitação" id="ipt_mensage"> <br>
+        <input class="input"type="number" placeholder="Idade" id="ipt_idade"> <br>
+        <button class="input" onclick="enviarCotacao()">Solicitar cotação</button>
+        
+    </div>
+    </div>
+
+</body>
 </html>
+
+
+<script>
+    function funcLogin () {
+        window.location.href = "login.html"
+    }
+
+    function enviarCotacao() {
+        var nome = ipt_nome.value;
+        var celular = ipt_celular.value;
+        var email = ipt_email.value;
+        var mensagem = ipt_mensage.value;
+        var idade = ipt_idade.value;
+
+        if (nome == "" || celular == "" || email == "" || mensagem == "" || idade == "") {
+            alert("Preencha todos os campos!");
+            return;
+        }
+
+        //Fetch para enviar o lead
+
+         fetch("/leads/cadastrar", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        // crie um atributo que recebe o valor recuperado aqui
+        // Agora vá para o arquivo routes/leads.js
+        nomeServer: nome,
+        celularServer: celular,
+        emailServer: email,
+        mensagemServer: mensagem,
+        idadeServer: idade,
+      }),
+    })
+    .then(response => {
+        if (response.ok) {
+            alert("Cotação enviada com sucesso!");
+        } else {
+            response.text().then(texto => {
+                alert("Erro ao enviar cotação: " + texto);
+            });
+        }
+    })
+    .catch(error => {
+        alert("Erro de conexão com o servidor!");
+        console.error(error);
+    });
+}
+</script>

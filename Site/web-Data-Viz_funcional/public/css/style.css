@@ -24,6 +24,7 @@
     .loginECadastro {
         width: 100%;
       color: aliceblue;
+      background-color: rgb(33, 101, 190);
       text-align: end;
       flex-direction: row;
     }
@@ -158,6 +159,7 @@
         align-items: center;
         flex-direction: column;
         line-height: 60px;
+        height: auto;
     }
 
     .fundo_login{

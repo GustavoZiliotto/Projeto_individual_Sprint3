@@ -1,12 +1,12 @@
 // sessão
 function validarSessao() {
-    var email = sessionStorage.EMAIL_USUARIO;
-    var nome = sessionStorage.NOME_USUARIO;
+    var codigo = sessionStorage.CODIGO_USUARIO;
+    var cpf = sessionStorage.CPF_USUARIO;
 
     var b_usuario = document.getElementById("b_usuario");
 
-    if (email != null && nome != null) {
-        b_usuario.innerHTML = nome;
+    if (codigo != null && cpf != null) {
+        b_usuario.innerHTML = cpf;
     } else {
         window.location = "../login.html";
     }

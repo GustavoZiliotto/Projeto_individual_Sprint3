@@ -90,6 +90,19 @@
 
 <script>
     const ctx = document.getElementById('grafico_de_barras');
+        function buscarIncidentes() {
+        var unidadeAtual = selecionar_unidade.value;
+        fetch(`/DashboardController/buscarLeads/`, { cache: 'no-store' })
+            .then(function (response) {
+                if (response.ok) {
+                    response.json().then(function (resposta) {
+                        let cotacoes_enviadas = resposta.map(item => item.cotacoes_enviadas);
+                        let lead_recebidos = resposta.map(item => item.lead_recebidos);
+
+                    });
+                }
+            });
+    }
 
     new Chart(ctx, {
       type: 'bar', // tipo 'line' para linhas
@@ -98,14 +111,14 @@
         datasets: [
           {
             label: 'Leads recebidos',
-            data: [22, 24, 27, 23, 20, 18],
+            data: lead_recebidos,
             borderColor: 'rgb(255, 99, 132)',
             backgroundColor: 'rgba(255, 99, 132, 0.2)',
             tension: 0.3
           },
           {
             label: 'Cotações enviadas',
-            data: [90, 89, 93, 87, 88, 82],
+            data: cotacoes_enviadas,
             borderColor: 'rgb(54, 162, 235)',
             backgroundColor: 'rgba(54, 162, 235, 0.2)',
             tension: 0.3
