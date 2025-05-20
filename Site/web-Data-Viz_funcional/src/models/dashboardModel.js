@@ -11,7 +11,7 @@ var database = require("../database/config");
 console.log(`model`);
 
 function buscarLeads() {
- 
+    var dataAtual =new Date()
     var usuario = 1;
     var anoAtual = dataAtual.getFullYear();
 
