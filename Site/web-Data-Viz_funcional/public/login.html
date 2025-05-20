@@ -32,7 +32,7 @@
 <script>
 
 function telaCadastro() {
-     //window.location.href = "cadastro.html"
+     window.location.href = "cadastro.html"
     }
 
     function entrar() {
@@ -70,11 +70,10 @@ function telaCadastro() {
                 resposta.json().then(json => {
                     console.log(json);
                     console.log(JSON.stringify(json));
-                    sessionStorage.CODIGO_USUARIO = json.codigo;
                     sessionStorage.ID_USUARIO = json.id;
 
                     setTimeout(function () {
-                      //  window.location.href = 'dashboard.html';
+                        window.location.href = 'dashboard.html';
                     }, 1000); // apenas para exibir o loading
 
                 });
