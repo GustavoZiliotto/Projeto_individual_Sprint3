@@ -7,7 +7,7 @@
     <title>Index</title>
 </head>
 <body>
-    <header class="'cabeçalho'">
+    <header class="cabeçalho">
         <div class="loginECadastro"> 
             <span style="margin-right: 50px;" onclick="funcLogin()">Acesso corretor</span>
         </div>
@@ -49,15 +49,19 @@
         <input class="input"type="text" placeholder="Mensagem da solicitação" id="ipt_mensage"> <br>
         <input class="input"type="number" placeholder="Idade" id="ipt_idade"> <br>
         <button class="input" onclick="enviarCotacao()">Solicitar cotação</button>
-        
-    </div>
-    </div>
+        </div>
+
+        <div class="card dados card1" id="card1"> 
+
+        </div>
+
 
 </body>
 </html>
 
 
 <script>
+    var preco1 = ''
     function funcLogin () {
         window.location.href = "login.html"
     }
@@ -68,6 +72,34 @@
         var email = ipt_email.value;
         var mensagem = ipt_mensage.value;
         var idade = ipt_idade.value;
+
+if (idade <= 18) {
+    preco1 = 'R$ 342,57';
+} else if (idade <= 23) {
+    preco1 = 'R$ 436,22';
+} else if (idade <= 28) {
+    preco1 = 'R$ 526,22';
+} else if (idade <= 33) {
+    preco1 = 'R$ 602,44';
+} else if (idade <= 38) {
+    preco1 = 'R$ 652,74';
+} else if (idade <= 43) {
+    preco1 = 'R$ 674,12';
+} else if (idade <= 48) {
+    preco1 = 'R$ 792,57';
+} else if (idade <= 53) {
+    preco1 = 'R$ 866,88';
+} else if (idade <= 58) {
+    preco1 = 'R$ 1.071,10';
+} else {
+    preco1 = 'R$ 1.800,43';
+}
+
+        card1.innerHTML = `
+            <img src="assets/Porto_logo.jpg" height="160px"> <br>
+            <h1 style="color: gold;">Ouro PRO</h1> <br>
+            <h2>Hospital ref: <span style="color: whitesmoke;"> Oswaldo Cruz </span> <br>
+            <h2>Preço: <span style="color: whitesmoke;">R$ ${preco1}</span></h2>`
 
         if (nome == "" || celular == "" || email == "" || mensagem == "" || idade == "") {
             alert("Preencha todos os campos!");
