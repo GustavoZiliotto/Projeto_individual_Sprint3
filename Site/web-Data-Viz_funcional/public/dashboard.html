@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
     <title>Dashboard</title>
 </head>
 <body class="grid">
@@ -90,50 +90,55 @@
 
 <script>
     const ctx = document.getElementById('grafico_de_barras');
-        function buscarIncidentes() {
+        
+    function graficoBarra() {
+
         var unidadeAtual = selecionar_unidade.value;
-        fetch(`/DashboardController/buscarLeads/`, { cache: 'no-store' })
+        fetch(`/dashboard/buscarLeads/`, { cache: 'no-store' })
             .then(function (response) {
                 if (response.ok) {
                     response.json().then(function (resposta) {
                         let cotacoes_enviadas = resposta.map(item => item.cotacoes_enviadas);
                         let lead_recebidos = resposta.map(item => item.lead_recebidos);
 
+                        console.log('passou do fetch');
+                        
+
+                    });
+                    new Chart(ctx, {
+                      type: 'bar',
+                      data: {
+                        labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                        datasets: [
+                          {
+                            label: 'Leads recebidos',
+                            data: lead_recebidos,
+                            borderColor: 'rgb(255, 99, 132)',
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            tension: 0.3
+                          },
+                          {
+                            label: 'Cotações enviadas',
+                            data: cotacoes_enviadas,
+                            borderColor: 'rgb(54, 162, 235)',
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            tension: 0.3
+                          }
+                        ]
+                      },
+                      options: {
+                        responsive: true,
+                        scales: {
+                          y: {
+                            beginAtZero: true
+                          }
+                        }
+                      }
                     });
                 }
             });
     }
 
-    new Chart(ctx, {
-      type: 'bar', // tipo 'line' para linhas
-      data: {
-        labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-        datasets: [
-          {
-            label: 'Leads recebidos',
-            data: lead_recebidos,
-            borderColor: 'rgb(255, 99, 132)',
-            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-            tension: 0.3
-          },
-          {
-            label: 'Cotações enviadas',
-            data: cotacoes_enviadas,
-            borderColor: 'rgb(54, 162, 235)',
-            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-            tension: 0.3
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
-      }
-    });
   </script>
 
 
