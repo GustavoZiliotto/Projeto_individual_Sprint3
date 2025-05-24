@@ -6,7 +6,7 @@ var dashboardController = require("../controllers/dashboardController");
 //Recebendo os dados do html e direcionando para a função cadastrar de dashboardController.js
 
 
-router.get("/dashboard/buscarLeads/", function (req, res) {
+router.get("/buscarLeads/", function (req, res) {
     dashboardController.buscarLeads(req, res);
 });
 

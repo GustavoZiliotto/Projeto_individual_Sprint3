@@ -10,24 +10,24 @@ var database = require("../database/config");
 
 console.log(`model`);
 
-function buscarLeads() {
+function buscarLeads(usuario) {
     var dataAtual =new Date()
-    var usuario = 1;
     var anoAtual = dataAtual.getFullYear();
 
     var instrucaoSql = `
-      select 
-  (select 
-  count(fklead)
-  from usuario_leads
-  where cotacao in ('S', 'A', 'O')  and
-  fkusuario = ${usuario} and
-  year(data) = ${anoAtual}) as cotacoes_enviadas,
+  select 
+  month(data) as mes,
+  count(case
+  when cotacao in ('S', 'A', 'O') then 1
+  else 0
+  end) as cotacoes_enviadas,
   count(fklead) as lead_recebidos
   from usuario_leads
   inner join leads on leads.id = fklead
   where fkusuario = ${usuario} and
-  year(data) = ${anoAtual};
+  year(data) = ${anoAtual}
+  group by data
+  order by mes
     `;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);

@@ -1,10 +1,11 @@
-var usuarioModel = require("../models/dashboardModel");
+var dashboardModel = require("../models/dashboardModel");
 
 function buscarLeads(req, res) {
-
+    console.log(`controller`);
+    const usuario = req.query.usuario;
     console.log(`controller`);
 
-    relatorioModel.buscarLeads().then((resultado) => {
+    dashboardModel.buscarLeads(usuario).then((resultado) => {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
@@ -18,5 +19,5 @@ function buscarLeads(req, res) {
 }
 
 module.exports = {
-buscarLeads
+    buscarLeads
 }

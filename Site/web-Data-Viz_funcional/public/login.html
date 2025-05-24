@@ -92,6 +92,8 @@ function telaCadastro() {
         })
 
         return false;
+
+    fetch(`/dashboard/buscarLeads?usuario=${sessionStorage.ID_USUARIO}`, { cache: 'no-store' })
     }
 
     function sumirMensagem() {

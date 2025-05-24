@@ -1,179 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
-    <title>Dashboard</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+  <title>Dashboard</title>
 </head>
+
 <body class="grid">
 
 
   <div class="kpi_container">
-<div class="kpi_filho">a</div>
-<div class="kpi_filho">a</div>
-<div class="kpi_filho">a</div>
-<div class="kpi_filho">a</div>
+    <div class="kpi_filho">a</div>
+    <div class="kpi_filho">a</div>
+    <div class="kpi_filho">a</div>
+    <div class="kpi_filho">a</div>
 
 
   </div>
 
   <div class="header cabeçalho"></div>
 
-    <div class="sidebar">
+  <div class="sidebar">
+
+  </div>
+
+  <section class="grafibarra">
+    <canvas style="width: 100%; height: 100%;" id="grafico_de_barras"></canvas>
+  </section>
+
+  <section class="grafipizza">
+    <canvas style="width: 100%; height: 100%;" id="grafico_de_pizza"></canvas>
+  </section>
+
+  <div class="espaço_direita"></div>
+
+  <div class="lista_container">
+    <div class="lista">
+      <h3>Solicitações</h3>
+      <table border="solid">
+        <thead>
+          <tr>
+            <th>Data</th>
+            <th>Nome</th>
+            <th>Numero</th>
+            <th>Email</th>
+            <th>Mensagem</th>
+            <th>Idade</th>
+            <th>Tipo de cotação enviada</th>
+            <th>Tipo de seguro fechado</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>13/05/25</td>
+            <td>João</td>
+            <td>11 9999999</td>
+            <td>teste@gmail.com</td>
+            <td>Quero cotação</td>
+            <td>29</td>
+            <td>
+              <input type="checkbox" name="cotação" value="auto">Auto <br>
+              <input type="checkbox" name="cotação" value="saude">Saúde <br>
+              <input type="checkbox" name="cotação" value="outros">Outros <br>
+            </td>
+
+            <td>
+              <input type="checkbox" name="apolice" value="auto">Auto <br>
+              <input type="checkbox" name="apolice" value="saude">Saúde <br>
+              <input type="checkbox" name="apolice" value="outros">Outros <br>
+            </td>
+          </tr>
+
 
     </div>
-
-    <section class="grafibarra">
-        <canvas style="width: 100%; height: 100%;" id="grafico_de_barras"></canvas>
-    </section>
-    
-    <section class="grafipizza">
-        <canvas style="width: 100%; height: 100%;" id="grafico_de_pizza"></canvas>
-    </section>
-
-    <div class="espaço_direita"></div>
-
-    <div class="lista_container">
-      <div class="lista">
-        <h3>Solicitações</h3>
-        <table border="solid">
-          <thead>
-            <tr>
-              <th>Data</th>
-              <th>Nome</th>
-              <th>Numero</th>
-              <th>Email</th>
-              <th>Mensagem</th>
-              <th>Idade</th>
-              <th>Tipo de cotação enviada</th>
-              <th>Tipo de seguro fechado</th>
-
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>13/05/25</td>
-              <td>João</td>
-              <td>11 9999999</td>
-              <td>teste@gmail.com</td>
-              <td>Quero cotação</td>
-              <td>29</td>
-              <td>
-                <input type="checkbox" name="cotação" value="auto">Auto <br>
-                <input type="checkbox" name="cotação" value="saude">Saúde <br>
-                <input type="checkbox" name="cotação" value="outros">Outros <br>
-              </td>
-
-              <td>
-                <input type="checkbox" name="apolice" value="auto">Auto <br>
-                <input type="checkbox" name="apolice" value="saude">Saúde <br>
-                <input type="checkbox" name="apolice" value="outros">Outros <br>
-              </td>
-            </tr>
+  </div>
 
 
-      </div>
-    </div>
-
-    
 
 </body>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-    function sair() {
-        window.location.href = "login.html"
-    }
+  function sair() {
+    window.location.href = "login.html"
+  }
 </script>
 
 <script>
-    const ctx = document.getElementById('grafico_de_barras');
-        
-    function graficoBarra() {
+  onload = function () {
+    graficoBarra()
+  }
+  const ctx = document.getElementById('grafico_de_barras');
 
-        var unidadeAtual = selecionar_unidade.value;
-        fetch(`/dashboard/buscarLeads/`, { cache: 'no-store' })
-            .then(function (response) {
-                if (response.ok) {
-                    response.json().then(function (resposta) {
-                        let cotacoes_enviadas = resposta.map(item => item.cotacoes_enviadas);
-                        let lead_recebidos = resposta.map(item => item.lead_recebidos);
+  function graficoBarra() {
 
-                        console.log('passou do fetch');
-                        
+    fetch(`/dashboard/buscarLeads?usuario=${sessionStorage.ID_USUARIO}`, { cache: 'no-store' })
+      .then(function (response) {
+        if (response.ok) {
+          response.json().then(function (resposta) {
+            let cotacoes_enviadas = resposta.map(item => item.cotacoes_enviadas);
+            let lead_recebidos = resposta.map(item => item.lead_recebidos);
+            let mes = resposta.map(item => item.mes);
 
-                    });
-                    new Chart(ctx, {
-                      type: 'bar',
-                      data: {
-                        labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-                        datasets: [
-                          {
-                            label: 'Leads recebidos',
-                            data: lead_recebidos,
-                            borderColor: 'rgb(255, 99, 132)',
-                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                            tension: 0.3
-                          },
-                          {
-                            label: 'Cotações enviadas',
-                            data: cotacoes_enviadas,
-                            borderColor: 'rgb(54, 162, 235)',
-                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                            tension: 0.3
-                          }
-                        ]
-                      },
-                      options: {
-                        responsive: true,
-                        scales: {
-                          y: {
-                            beginAtZero: true
-                          }
-                        }
-                      }
-                    });
-                }
-            });
-    }
 
-  </script>
+            console.log('passou do fetch');
+
+            var cotacoes_enviadas_ordenadas = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            var lead_recebidos_ordenados = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            var mesAtual = 0;
+            for (i = 0; i < 12; i++) {
+              lead_recebidos_ordenados[mes[i] - 1] = lead_recebidos[i]
+              cotacoes_enviadas_ordenadas[mes[i] - 1] = cotacoes_enviadas[i]
+            }
+            criarGraficoBarra(lead_recebidos_ordenados, cotacoes_enviadas_ordenadas);
+          });
+        }
+      });
+  }
+
+  function criarGraficoBarra(lead_recebidos_ordenados, cotacoes_enviadas_ordenadas) {
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+        datasets: [
+          {
+            label: 'Leads recebidos',
+            data: lead_recebidos_ordenados,
+            borderColor: 'rgb(255, 99, 132)',
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            tension: 0.3
+          },
+          {
+            label: 'Cotações enviadas',
+            data: cotacoes_enviadas_ordenadas,
+            borderColor: 'rgb(54, 162, 235)',
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            tension: 0.3
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    })
+  };
+
+</script>
 
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  
+
 <script>
   const ctx2 = document.getElementById('grafico_de_pizza');
 
   new Chart(ctx2, {
-  type: 'pie',
-  data: {
-    labels: ['12:00', '13:00', '14:00', '15:00', '16:00', '17:00'],
-    datasets: [
-      {
-        label: 'Temperatura',
-        data: [30, 29, 28, 25, 22, 23],
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.6)',
-          'rgba(54, 162, 235, 0.6)',
-          'rgba(255, 206, 86, 0.6)',
-          'rgba(75, 192, 192, 0.6)',
-          'rgba(153, 102, 255, 0.6)',
-          'rgba(255, 159, 64, 0.6)'
-        ]
-      }
-    ]
-  },
-  options: {
-    responsive: true
-  }
-});
+    type: 'pie',
+    data: {
+      labels: ['12:00', '13:00', '14:00', '15:00', '16:00', '17:00'],
+      datasets: [
+        {
+          label: 'Temperatura',
+          data: [30, 29, 28, 25, 22, 23],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.6)',
+            'rgba(54, 162, 235, 0.6)',
+            'rgba(255, 206, 86, 0.6)',
+            'rgba(75, 192, 192, 0.6)',
+            'rgba(153, 102, 255, 0.6)',
+            'rgba(255, 159, 64, 0.6)'
+          ]
+        }
+      ]
+    },
+    options: {
+      responsive: true
+    }
+  });
 </script>
 
 </html>
 
 
 </html>
-
