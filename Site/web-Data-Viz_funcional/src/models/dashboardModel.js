@@ -34,6 +34,42 @@ function buscarLeads(usuario) {
     return database.executar(instrucaoSql);
 }
 
+function buscarLeadsPizza(usuario) {
+  var dataAtual =new Date()
+  var mesAtual = dataAtual.getMonth() + 1
+
+  var instrucaoSql = 
+  `
+ select
+count(case
+when cotacao in ('S', 'A', 'O') and 
+apolice is null then 1
+end
+) as cotacoes_enviadas,
+count(case
+when apolice = 'S'
+then 1
+end) as apolices_saude,
+count(case
+when apolice = 'A'
+then 1
+end) as apolices_auto,
+count(case
+when apolice = 'O'
+then 1
+end) as apolices_outros
+from usuario_leads
+inner join leads on leads.id = usuario_leads.fklead
+where ${usuario} and
+month(data) = ${mesAtual}
+;
+
+  `
+      console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
-    buscarLeads
+    buscarLeads,
+    buscarLeadsPizza
 }

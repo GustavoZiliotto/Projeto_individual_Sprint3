@@ -93,6 +93,7 @@
 <script>
   onload = function () {
     graficoBarra()
+    graficoPizza()
   }
   const ctx = document.getElementById('grafico_de_barras');
 
@@ -161,31 +162,55 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-  const ctx2 = document.getElementById('grafico_de_pizza');
 
-  new Chart(ctx2, {
-    type: 'pie',
-    data: {
-      labels: ['12:00', '13:00', '14:00', '15:00', '16:00', '17:00'],
-      datasets: [
-        {
-          label: 'Temperatura',
-          data: [30, 29, 28, 25, 22, 23],
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.6)',
-            'rgba(54, 162, 235, 0.6)',
-            'rgba(255, 206, 86, 0.6)',
-            'rgba(75, 192, 192, 0.6)',
-            'rgba(153, 102, 255, 0.6)',
-            'rgba(255, 159, 64, 0.6)'
-          ]
+function graficoPizza() {
+
+    fetch(`/dashboard/buscarLeadsPizza?usuario=${sessionStorage.ID_USUARIO}`, { cache: 'no-store' })
+    .then(function (response) {
+        if (response.ok) {
+          response.json().then(function (resposta) {
+            let cotacoes_enviadas = resposta.map(item => item.cotacoes_enviadas);
+            let apolices_saude = resposta.map(item => item.apolices_saude);
+            let apolices_auto = resposta.map(item => item.apolices_auto);
+            let apolices_outros = resposta.map(item => item.apolices_outros)
+
+
+            console.log('passou do fetch2');
+
+            criarGraficoPizza(cotacoes_enviadas[0], apolices_saude[0],apolices_auto[0],apolices_outros[0]);
+          });
         }
-      ]
-    },
-    options: {
-      responsive: true
-    }
-  });
+      });
+  }
+
+
+  function criarGraficoPizza(cotacoes_enviadas, apolices_saude,apolices_auto,apolices_outros){
+
+
+
+    const ctx2 = document.getElementById('grafico_de_pizza');
+    
+    new Chart(ctx2, {
+      type: 'pie',
+      data: {
+        labels: ['cotações sem retorno', 'vendas de saúde', 'vendas de auto', 'vendas em outros ramos'],
+        datasets: [
+          {
+            data:[cotacoes_enviadas, apolices_saude,apolices_auto, apolices_outros ],
+            backgroundColor: [
+              '#ff0000',
+              '#4547FF',
+              '#4B0082',
+              '#40E0D0'
+            ]
+          }
+        ]
+      },
+      options: {
+        responsive: true
+      }
+    });
+  }
 </script>
 
 </html>
