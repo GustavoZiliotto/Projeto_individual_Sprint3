@@ -88,13 +88,38 @@
   function sair() {
     window.location.href = "login.html"
   }
-</script>
 
-<script>
   onload = function () {
     graficoBarra()
     graficoPizza()
   }
+
+
+  function lista (){
+
+    fetch(`/dashboard/buscarLeadsLista?usuario=${sessionStorage.ID_USUARIO}`, { cache: 'no-store' })
+    .then(function (response) {
+        if (response.ok) {
+          response.json().then(function (resposta) {
+            console.log(resposta)
+            let data = resposta.map(item => item.data);
+            let nome = resposta.map(item => item.nome);
+            let celular = resposta.map(item => item.celular);
+            let email = resposta.map(item => item.email);
+            let mensagem = resposta.map(item => item.mensagem);
+            let idade = resposta.map(item => item.idade);
+
+            console.log('passou do fetch da lista');
+
+          });
+        }
+      });
+  }
+
+  
+
+
+
   const ctx = document.getElementById('grafico_de_barras');
 
   function graficoBarra() {
@@ -108,7 +133,7 @@
             let mes = resposta.map(item => item.mes);
 
 
-            console.log('passou do fetch');
+            console.log('passou do fetch do grafico de barra');
 
             var cotacoes_enviadas_ordenadas = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
             var lead_recebidos_ordenados = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -169,13 +194,14 @@ function graficoPizza() {
     .then(function (response) {
         if (response.ok) {
           response.json().then(function (resposta) {
+            console.log(resposta)
             let cotacoes_enviadas = resposta.map(item => item.cotacoes_enviadas);
             let apolices_saude = resposta.map(item => item.apolices_saude);
             let apolices_auto = resposta.map(item => item.apolices_auto);
             let apolices_outros = resposta.map(item => item.apolices_outros)
 
 
-            console.log('passou do fetch2');
+            console.log('passou do fetch do grafico de pizza');
 
             criarGraficoPizza(cotacoes_enviadas[0], apolices_saude[0],apolices_auto[0],apolices_outros[0]);
           });

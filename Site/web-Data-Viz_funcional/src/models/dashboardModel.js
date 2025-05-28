@@ -60,7 +60,7 @@ then 1
 end) as apolices_outros
 from usuario_leads
 inner join leads on leads.id = usuario_leads.fklead
-where ${usuario} and
+where fkusuario = ${usuario} and
 month(data) = ${mesAtual}
 ;
 
@@ -69,7 +69,26 @@ month(data) = ${mesAtual}
     return database.executar(instrucaoSql);
 }
 
+function buscarLeadsLista(usuario){
+  var instrucaoSql = `
+  select
+  l.data,
+  l.nome, 
+  l.celular, 
+  l.email, 
+  l.mensagem, 
+  l.idade
+  from leads as l
+  inner join usuarios_leads on usuarios_leads.fklead = l.id
+  where fkusuario = ${usuario}
+  order by data desc
+  `
+  console.log("Executando a instrução SQL: \n" + instrucaoSql);
+  return database.executar(instrucaoSql);
+}
+
 module.exports = {
     buscarLeads,
-    buscarLeadsPizza
+    buscarLeadsPizza,
+    buscarLeadsLista
 }
