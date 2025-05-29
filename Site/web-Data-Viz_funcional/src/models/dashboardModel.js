@@ -21,9 +21,8 @@ function buscarLeads(usuario) {
   when cotacao in ('S', 'A', 'O') then 1
   else 0
   end) as cotacoes_enviadas,
-  count(fklead) as lead_recebidos
-  from usuario_leads
-  inner join leads on leads.id = fklead
+  count(id) as lead_recebidos
+  from leads
   where fkusuario = ${usuario} and
   year(data) = ${anoAtual}
   group by data
@@ -58,8 +57,7 @@ count(case
 when apolice = 'O'
 then 1
 end) as apolices_outros
-from usuario_leads
-inner join leads on leads.id = usuario_leads.fklead
+from leads
 where fkusuario = ${usuario} and
 month(data) = ${mesAtual}
 ;
@@ -79,7 +77,6 @@ function buscarLeadsLista(usuario){
   l.mensagem, 
   l.idade
   from leads as l
-  inner join usuarios_leads on usuarios_leads.fklead = l.id
   where fkusuario = ${usuario}
   order by data desc
   `

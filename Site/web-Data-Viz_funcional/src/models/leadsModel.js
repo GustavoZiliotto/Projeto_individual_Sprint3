@@ -25,25 +25,14 @@ function cadastrar(nome, celular, email, mensagem, idade) {
     return database.executar(instrucaoSql);
 }
 
-function pegarUltimoLead(){
-    var instrucaoSql = `
-    select
-    count (leads.id)
-    from leads
-    order by id desc
-    limit 1;
-    `
-    return database.executar(instrucaoSql);
 
-}
-
-function cadastrarPorUsuario(usuario){
+function cadastrarPorUsuario(){
     let count = verQuantidade()
     var receber = Math.random * (count - 1) + 1
 
     var instrucaoSql = `
-    insert into usuarios_leads (fkusuario, fklead) values
-    (${receber},${pegarUltimoLead() + 1} )
+    insert into leads (fkusuario) values
+    (${receber})
     `
     return database.executar(instrucaoSql);
 }
@@ -52,5 +41,5 @@ module.exports = {
     cadastrar,
     verQuantidade,
     cadastrarPorUsuario,
-    pegarUltimoLead
+    
 };
