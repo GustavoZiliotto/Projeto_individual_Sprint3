@@ -10,5 +10,10 @@ router.get("/buscarLeads/", function (req, res) {
     dashboardController.buscarLeads(req, res);
 });
 
+router.get("/buscarLeadsPizza/", function (req, res) {
+    dashboardController.buscarLeadsPizza(req, res);
+});
+
+
 
 module.exports = router;
