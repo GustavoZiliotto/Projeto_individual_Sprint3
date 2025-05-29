@@ -8,5 +8,10 @@ router.post("/cadastrar", function (req, res) {
     usuarioController.cadastrar(req, res);
 })
 
+router.get("/verQuantidade", function (req, res) {
+    usuarioController.verQuantidade(req, res);
+})
+
+
 
 module.exports = router;
