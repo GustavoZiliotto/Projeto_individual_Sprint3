@@ -37,10 +37,12 @@
   <div class="espaço_direita"></div>
 
   <div class="lista_container">
-    <div class="lista">
-      <h3>Solicitações</h3>
-      <table border="solid" id="tabela">        
-
+    <div class="lista"> <br>
+      <h3>Solicitações</h3> <br> <br>
+      <table border="solid" class="tabelaDashboard" id="tabela">        
+        <br> <br>
+        <button onclick="poximaLista()">></button> 
+        <button onclick="anteriorLista()"><</button>
     </div>
   </div>
 
@@ -62,6 +64,7 @@
     graficoPizza()
     lista()
   }
+
 
 
   function lista (){
@@ -105,8 +108,9 @@
         </thead>
         <tbody>
     `
-
-    for(i =0; i< nome.length; i++){
+    var index = 5
+    var i = 0
+    while(i<index){
       listaExibir += `
       <tr>
             <td>${data[i]}</td>
@@ -175,7 +179,7 @@
         <input type="checkbox" name="apolice" value="outros">Outros <br>
         `
       }
-      
+      i++
     }
     tabela.innerHTML = listaExibir
   }
