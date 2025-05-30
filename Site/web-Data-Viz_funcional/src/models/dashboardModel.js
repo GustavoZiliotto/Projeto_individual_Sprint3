@@ -19,7 +19,6 @@ function buscarLeads(usuario) {
   month(data) as mes,
   count(case
   when cotacao in ('S', 'A', 'O') then 1
-  else 0
   end) as cotacoes_enviadas,
   count(id) as lead_recebidos
   from leads
@@ -70,13 +69,15 @@ month(data) = ${mesAtual}
 function buscarLeadsLista(usuario){
   var instrucaoSql = `
   select
-  l.data,
-  l.nome, 
-  l.celular, 
-  l.email, 
-  l.mensagem, 
-  l.idade
-  from leads as l
+  data,
+  nome, 
+  celular, 
+  email, 
+  mensagem, 
+  idade,
+  cotacao,
+  apolice
+  from leads
   where fkusuario = ${usuario}
   order by data desc
   `

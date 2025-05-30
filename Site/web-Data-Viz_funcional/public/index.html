@@ -151,7 +151,7 @@
 
 
         pai2.innerHTML = `<div class="card dados card1" id="card1">
-            <b><h1 style="color:gold;">OURO PRO</h1></b> <br>
+            <b><h1 style="color:#ffd700;">OURO PRO</h1></b> <br>
             <section class="dadosPlanos">
                 <h2>Hospital referencia: <span style="color: whitesmoke;"> Oswaldo Cruz </span> <br>
                     </section> <br>
@@ -183,7 +183,7 @@
         }
 
         pai1.innerHTML = `<div class="card dados card1" id="card1">
-    <b><h1 style="color:gold;">OURO MAX</h1></b> <br>
+    <b><h1 style="color:#ffbf00;">OURO MAX</h1></b> <br>
     <section class="dadosPlanos">
            <h2>Hospital referencia: <span style="color: whitesmoke;"> Sírio-Libanês </span> <br>
             </section> <br>
@@ -211,12 +211,16 @@
             preco3 = 'R$ 749,53';
         } else if (idade <= 58) {
             preco3 = 'R$ 926,10';
-        } else {
+        } else if (idade <= 70) {
             preco3 = 'R$ 1.556,69';
+        } else{
+            preco3 = 'R$ 1.556,69';
+            alert (`Devido a idade de ${idade} ser superior a 70 ano, seu plano está sujeito a condições especiais para a aceitação
+            Aguarde o contato para mais informações`)
         }
 
         pai3.innerHTML = `<div class="card dados card1" id="card1">
-    <b><h1 style="color:silver;">PRATA PRO</h1></b> <br>
+    <b><h1 style="color:#c8c8c8;">PRATA PRO</h1></b> <br>
     <section class="dadosPlanos">
         <h2>Hospital referencia: <span style="color: whitesmoke;"> Sírio-Libanês </span> <br>
             </section> <br>

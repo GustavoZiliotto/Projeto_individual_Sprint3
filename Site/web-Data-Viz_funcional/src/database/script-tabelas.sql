@@ -6,57 +6,57 @@
 comandos para mysql server
 */
 
-CREATE DATABASE aquatech;
+create database projeto_indi_sprint3;
+use projeto_indi_sprint3;
 
-USE aquatech;
+create table usuario (
+id int primary key auto_increment,
+codigo varchar (50),
+email varchar (50),
+cpf varchar(50),
+senha varchar(50),
+unique (codigo));
 
-CREATE TABLE empresa (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	razao_social VARCHAR(50),
-	cnpj CHAR(14),
-	codigo_ativacao VARCHAR(50)
-);
+create table leads (
+id int primary key auto_increment,
+data datetime default current_timestamp,
+nome varchar (70),
+celular varchar (30),
+email varchar (50),
+mensagem varchar (300),
+idade varchar(3),
+cotacao char(1),
+apolice char (1),
+fkusuario int,
+foreign key (fkusuario) references usuario (id));
 
-CREATE TABLE usuario (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	nome VARCHAR(50),
-	email VARCHAR(50),
-	senha VARCHAR(50),
-	fk_empresa INT,
-	FOREIGN KEY (fk_empresa) REFERENCES empresa(id)
-);
+create table usuario_leads (
+fkusuario int,
+foreign key (fkusuario) references usuario (id),
+fklead int,
+foreign key (fklead) references leads (id),
+cotacao char(1),
+apolice char (1),
+primary key (fkusuario, fklead));
 
-CREATE TABLE aviso (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	titulo VARCHAR(100),
-	descricao VARCHAR(150),
-	fk_usuario INT,
-	FOREIGN KEY (fk_usuario) REFERENCES usuario(id)
-);
+create user if not exists site_seguros identified by 'Sptech#2024';
+grant all privileges on projeto_indi_sprint3 to site_seguros;
 
-create table aquario (
-/* em nossa regra de negócio, um aquario tem apenas um sensor */
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	descricao VARCHAR(300),
-	fk_empresa INT,
-	FOREIGN KEY (fk_empresa) REFERENCES empresa(id)
-);
+select * from usuario;
+select * from leads;
 
-/* esta tabela deve estar de acordo com o que está em INSERT de sua API do arduino - dat-acqu-ino */
 
-create table medida (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	dht11_umidade DECIMAL,
-	dht11_temperatura DECIMAL,
-	luminosidade DECIMAL,
-	lm35_temperatura DECIMAL,
-	chave TINYINT,
-	momento DATETIME,
-	fk_aquario INT,
-	FOREIGN KEY (fk_aquario) REFERENCES aquario(id)
-);
+INSERT INTO leads (nome, celular, email, mensagem, idade) VALUES
+('Maria Silva', '(11)91234-5678', 'maria.silva@email.com', 'Gostaria de saber mais sobre o seguro residencial.', '32'),
+('Carlos Oliveira', '(21)99876-5432', 'carlos.oliveira@email.com', 'Tenho interesse em seguro para automóvel.', '45'),
+('Ana Souza', '(31)98765-4321', 'ana.souza@email.com', 'Quero cotação para seguro de vida.', '28'),
+('Roberto Lima', '(41)97654-3210', 'roberto.lima@email.com', 'Busco seguro empresarial.', '39');
 
-insert into empresa (razao_social, codigo_ativacao) values ('Empresa 1', 'ED145B');
-insert into empresa (razao_social, codigo_ativacao) values ('Empresa 2', 'A1B2C3');
-insert into aquario (descricao, fk_empresa) values ('Aquário de Estrela-do-mar', 1);
-insert into aquario (descricao, fk_empresa) values ('Aquário de Peixe-dourado', 2);
+INSERT INTO usuario_leads (fkusuario, fklead, cotacao, apolice) VALUES
+(1, 1, 'S', 'N'),
+(1, 2, 'S', 'S'),
+(2, 3, 'N', 'N'),
+(2, 4, 'S', 'N');
+
+select 
+distinct (month(data)) as mes

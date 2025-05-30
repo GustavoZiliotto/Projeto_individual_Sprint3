@@ -45,6 +45,7 @@
     .conteudo2 {
         display: grid;
         height: calc(100vh - 100px);
+        gap: 20px;
         grid-template-areas:
         'titulo titulo titulo titulo'
         'linhaLogo linhaLogo linhaLogo linhaLogo'
@@ -318,7 +319,7 @@ align-items: center;}
 
 .footer {
   background-color: #328fcd;
-  height: 150px;
+  height: 80px;
   color: #fff;
   display: flex;
   font-size: 15px;

@@ -39,41 +39,7 @@
   <div class="lista_container">
     <div class="lista">
       <h3>Solicitações</h3>
-      <table border="solid">
-        <thead>
-          <tr>
-            <th>Data</th>
-            <th>Nome</th>
-            <th>Numero</th>
-            <th>Email</th>
-            <th>Mensagem</th>
-            <th>Idade</th>
-            <th>Tipo de cotação enviada</th>
-            <th>Tipo de seguro fechado</th>
-
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>13/05/25</td>
-            <td>João</td>
-            <td>11 9999999</td>
-            <td>teste@gmail.com</td>
-            <td>Quero cotação</td>
-            <td>29</td>
-            <td>
-              <input type="checkbox" name="cotação" value="auto">Auto <br>
-              <input type="checkbox" name="cotação" value="saude">Saúde <br>
-              <input type="checkbox" name="cotação" value="outros">Outros <br>
-            </td>
-
-            <td>
-              <input type="checkbox" name="apolice" value="auto">Auto <br>
-              <input type="checkbox" name="apolice" value="saude">Saúde <br>
-              <input type="checkbox" name="apolice" value="outros">Outros <br>
-            </td>
-          </tr>
-
+      <table border="solid" id="tabela">        
 
     </div>
   </div>
@@ -85,6 +51,8 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
+
+  
   function sair() {
     window.location.href = "login.html"
   }
@@ -92,6 +60,7 @@
   onload = function () {
     graficoBarra()
     graficoPizza()
+    lista()
   }
 
 
@@ -108,16 +77,108 @@
             let email = resposta.map(item => item.email);
             let mensagem = resposta.map(item => item.mensagem);
             let idade = resposta.map(item => item.idade);
+            let cotacao = resposta.map(item => item.cotacao);
+            let apolice = resposta.map(item => item.apolice);
+
 
             console.log('passou do fetch da lista');
-
+            criarLista(data, nome, celular, email, mensagem, idade, cotacao, apolice)
           });
         }
       });
   }
 
-  
+  function criarLista(data, nome, celular, email, mensagem, idade, cotacao, apolice){
+    var listaExibir = `
+            <thead>
+          <tr>
+            <th>Data</th>
+            <th>Nome</th>
+            <th>Numero</th>
+            <th>Email</th>
+            <th>Mensagem</th>
+            <th>Idade</th>
+            <th>Tipo de cotação enviada</th>
+            <th>Tipo de seguro fechado</th>
 
+          </tr>
+        </thead>
+        <tbody>
+    `
+
+    for(i =0; i< nome.length; i++){
+      listaExibir += `
+      <tr>
+            <td>${data[i]}</td>
+            <td>${nome[i]}</td>
+            <td>${celular[i]}</td>
+            <td>${email[i]}</td>
+            <td>${mensagem[i]}</td>
+            <td>${idade[i]}</td>
+            <td>`
+            
+      if(cotacao[i] == 'A'){
+        listaExibir += `
+        <input type="checkbox" name="cotação" value="auto" checked>Auto <br>
+        `
+      } else {
+       listaExibir += `<input type="checkbox" name="cotação" value="auto" >Auto <br>`
+      }
+              
+      if(cotacao[i] == 'S'){
+        listaExibir += `
+              <input type="checkbox" name="cotação" value="saude" checked >Saúde <br>`
+      }else{
+         listaExibir += `
+              <input type="checkbox" name="cotação" value="saude">Saúde <br>`
+      }
+
+      if(cotacao[i] == 'O'){
+        listaExibir += `
+         <input type="checkbox" name="cotação" value="outros" checked>Outros <br>
+        `
+      } else{
+        listaExibir += `
+        <input type="checkbox" name="cotação" value="outros">Outros <br>
+        `
+      }
+
+      listaExibir += `</td>
+            <td>`
+
+      if(apolice[i] == 'A'){
+        listaExibir += `
+        <input type="checkbox" name="apolice" value="auto" checked>Auto <br>
+        `
+      } else {
+        listaExibir += `
+        <input type="checkbox" name="apolice" value="auto">Auto <br>
+        `
+      }
+
+      if(apolice[i] == 'S'){
+        listaExibir += `
+        <input type="checkbox" name="apolice" value="saude" checked>Saúde <br>
+        `
+      } else {
+         listaExibir += `
+        <input type="checkbox" name="apolice" value="saude">Saúde <br>
+        `
+      }
+
+      if(apolice[i] == 'O'){
+        listaExibir += `
+        <input type="checkbox" name="apolice" value="outros" checked>Outros <br>
+        `
+      } else {
+         listaExibir += `
+        <input type="checkbox" name="apolice" value="outros">Outros <br>
+        `
+      }
+      
+    }
+    tabela.innerHTML = listaExibir
+  }
 
 
   const ctx = document.getElementById('grafico_de_barras');
