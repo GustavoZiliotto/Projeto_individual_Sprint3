@@ -43,6 +43,8 @@
         <br> <br>
         <button onclick="poximaLista()">></button> 
         <button onclick="anteriorLista()"><</button>
+        <br> <br>
+        <button onclick="enviarAlteracoes()">Enviar Alterações no status do lead</button>
     </div>
   </div>
 
@@ -66,6 +68,17 @@
   }
 
 
+  var leads = {
+  id: [],
+  data: [],
+  nome: [],
+  celular: [],
+  email: [],
+  mensagem: [],
+  idade: [],
+  cotacao: [],
+  apolice: []
+}
 
   function lista (){
 
@@ -74,24 +87,48 @@
         if (response.ok) {
           response.json().then(function (resposta) {
             console.log(resposta)
-            let data = resposta.map(item => item.data);
-            let nome = resposta.map(item => item.nome);
-            let celular = resposta.map(item => item.celular);
-            let email = resposta.map(item => item.email);
-            let mensagem = resposta.map(item => item.mensagem);
-            let idade = resposta.map(item => item.idade);
-            let cotacao = resposta.map(item => item.cotacao);
-            let apolice = resposta.map(item => item.apolice);
-
+            leads = {
+             id: resposta.map(item => item.id),
+             data: resposta.map(item => item.data),
+             nome: resposta.map(item => item.nome),
+             celular: resposta.map(item => item.celular),
+             email: resposta.map(item => item.email),
+             mensagem: resposta.map(item => item.mensagem),
+             idade: resposta.map(item => item.idade),
+             cotacao: resposta.map(item => item.cotacao),
+             apolice: resposta.map(item => item.apolice)}
 
             console.log('passou do fetch da lista');
-            criarLista(data, nome, celular, email, mensagem, idade, cotacao, apolice)
+            criarLista()
+
           });
         }
       });
   }
+  var pagLista = 0
+  function poximaLista(){
+    if((pagLista * 5) + 4 < leads.nome.length){
+      pagLista ++
 
-  function criarLista(data, nome, celular, email, mensagem, idade, cotacao, apolice){
+      criarLista()
+    }else {
+      alert('Não é possível ir para a proxima lista, acabaram os leads disponiveis')
+    }
+
+  }
+
+  function anteriorLista(){
+    if(pagLista > 0){
+      pagLista --
+
+      criarLista()
+    }else{
+      alert('Não é possível voltar a lista, você já está na primeira parte')
+    }
+
+  }
+
+  function criarLista(){
     var listaExibir = `
             <thead>
           <tr>
@@ -101,88 +138,143 @@
             <th>Email</th>
             <th>Mensagem</th>
             <th>Idade</th>
-            <th>Tipo de cotação enviada</th>
-            <th>Tipo de seguro fechado</th>
+            <th>Cotação enviada</th>
+            <th>Seguro fechado</th>
 
           </tr>
         </thead>
         <tbody>
     `
-    var index = 5
-    var i = 0
-    while(i<index){
+    let i = pagLista * 5
+    let fim = i + 5
+    while(i<fim){
       listaExibir += `
       <tr>
-            <td>${data[i]}</td>
-            <td>${nome[i]}</td>
-            <td>${celular[i]}</td>
-            <td>${email[i]}</td>
-            <td>${mensagem[i]}</td>
-            <td>${idade[i]}</td>
+            <td>${leads.data[i]}</td>
+            <td>${leads.nome[i]}</td>
+            <td>${leads.celular[i]}</td>
+            <td>${leads.email[i]}</td>
+            <td>${leads.mensagem[i]}</td>
+            <td>${leads.idade[i]}</td>
             <td>`
             
-      if(cotacao[i] == 'A'){
+      if(leads.cotacao[i] == 'A'){
         listaExibir += `
-        <input type="checkbox" name="cotação" value="auto" checked>Auto <br>
+        <input type="radio" name="cotação${[i]}" value="A" checked>Auto <br>
         `
       } else {
-       listaExibir += `<input type="checkbox" name="cotação" value="auto" >Auto <br>`
+       listaExibir += `<input type="radio" name="cotação${[i]}" value="A" >Auto <br>`
       }
               
-      if(cotacao[i] == 'S'){
+      if(leads.cotacao[i] == 'S'){
         listaExibir += `
-              <input type="checkbox" name="cotação" value="saude" checked >Saúde <br>`
+              <input type="radio" name="cotação${[i]}" value="S" checked >Saúde <br>`
       }else{
          listaExibir += `
-              <input type="checkbox" name="cotação" value="saude">Saúde <br>`
+              <input type="radio" name="cotação${[i]}" value="S">Saúde <br>`
       }
-
-      if(cotacao[i] == 'O'){
+      
+      if(leads.cotacao[i] == 'AS'){
         listaExibir += `
-         <input type="checkbox" name="cotação" value="outros" checked>Outros <br>
+        <input type="radio" name="cotação${[i]}" value="AS" checked >Saúde <br>
         `
       } else{
         listaExibir += `
-        <input type="checkbox" name="cotação" value="outros">Outros <br>
+        <input type="radio" name="cotação${[i]}" value="AS"  >Saúde <br>
+        `
+      }
+
+      if(leads.cotacao[i] == 'O'){
+        listaExibir += `
+         <input type="radio" name="cotação${[i]}" value="O" checked>Outros <br>
+        `
+      } else{
+        listaExibir += `
+        <input type="radio" name="cotação${[i]}" value="O">Outros <br>
         `
       }
 
       listaExibir += `</td>
             <td>`
 
-      if(apolice[i] == 'A'){
+      if(leads.apolice[i] == 'A'){
         listaExibir += `
-        <input type="checkbox" name="apolice" value="auto" checked>Auto <br>
+        <input type="radio" name="apolice${[i]}" value="A" checked>Auto <br>
         `
       } else {
         listaExibir += `
-        <input type="checkbox" name="apolice" value="auto">Auto <br>
+        <input type="radio" name="apolice${[i]}" value="A">Auto <br>
         `
       }
 
-      if(apolice[i] == 'S'){
+      if(leads.apolice[i] == 'S'){
         listaExibir += `
-        <input type="checkbox" name="apolice" value="saude" checked>Saúde <br>
+        <input type="radio" name="apolice${[i]}" value="S" checked>Saúde <br>
         `
       } else {
          listaExibir += `
-        <input type="checkbox" name="apolice" value="saude">Saúde <br>
+        <input type="radio" name="apolice${[i]}" value="S">Saúde <br>
         `
       }
 
-      if(apolice[i] == 'O'){
+      if(leads.apolice[i] == 'AS'){
         listaExibir += `
-        <input type="checkbox" name="apolice" value="outros" checked>Outros <br>
+        <input type="radio" name="apolice${[i]}" value="AS" checked >Saúde <br>
+        `
+      } else{
+        listaExibir += `
+        <input type="radio" name="apolice${[i]}" value="AS"  >Saúde <br>
+        `
+      }
+
+      if(leads.apolice[i] == 'O'){
+        listaExibir += `
+        <input type="radio" name="apolice${[i]}" value="O" checked>Outros <br>
         `
       } else {
          listaExibir += `
-        <input type="checkbox" name="apolice" value="outros">Outros <br>
+        <input type="radio" name="apolice${[i]}" value="O">Outros <br>
         `
       }
       i++
     }
     tabela.innerHTML = listaExibir
   }
+  var alteracoes = {
+    cotacoes: [],
+    apolices: []
+  }
+  function enviarAlteracoes(){
+       for(let i = 0; i < leads.id.length;i++){
+        var radioCotacaoAtual = document.getElementsByName(`cotacao${i}`).val
+        for(let j =0; j < radioCotacaoAtual.length; j++){
+          if(radioCotacaoAtual[j] != )
+        }
+       }
+       /*
+        fetch(`/dashboard/atualizar/${sessionStorage.getItem("ID_POSTAGEM_EDITANDO")}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                descricao: textarea_descricao.value
+            })
+        }).then(function (resposta) {
+
+            if (resposta.ok) {
+                window.alert("Post atualizado com sucesso pelo usuario de email: " + sessionStorage.getItem("EMAIL_USUARIO") + "!");
+                window.location = "/dashboard/mural.html"
+            } else if (resposta.status == 404) {
+                window.alert("Deu 404!");
+            } else {
+                throw ("Houve um erro ao tentar realizar a postagem! Código da resposta: " + resposta.status);
+            }
+        }).catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+        });*/
+    }
+  
 
 
   const ctx = document.getElementById('grafico_de_barras');

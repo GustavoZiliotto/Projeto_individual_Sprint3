@@ -14,19 +14,19 @@ function buscarLeads(usuario) {
     var dataAtual =new Date()
     var anoAtual = dataAtual.getFullYear();
 
-    var instrucaoSql = `
+var instrucaoSql = `
   select 
-  month(data) as mes,
-  count(case
-  when cotacao in ('S', 'A', 'O') then 1
-  end) as cotacoes_enviadas,
-  count(id) as lead_recebidos
+    month(data) as mes,
+    count(case 
+    when cotacao in ('S', 'A', 'O') then 1
+     end) as cotacoes_enviadas,
+    count(id) as lead_recebidos
   from leads
-  where fkusuario = ${usuario} and
-  year(data) = ${anoAtual}
-  group by data
-  order by mes
-    `;
+  where fkusuario = ${usuario} 
+    and year(data) = ${anoAtual}
+  group by month(data)
+  order by mes;
+`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -57,8 +57,7 @@ when apolice = 'O'
 then 1
 end) as apolices_outros
 from leads
-where fkusuario = ${usuario} and
-month(data) = ${mesAtual}
+where fkusuario = ${usuario}
 ;
 
   `
@@ -69,7 +68,8 @@ month(data) = ${mesAtual}
 function buscarLeadsLista(usuario){
   var instrucaoSql = `
   select
-  data,
+  id,
+  DATE_FORMAT(data, '%d/%m/%Y') as data,
   nome, 
   celular, 
   email, 
