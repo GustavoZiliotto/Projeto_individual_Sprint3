@@ -18,7 +18,13 @@ router.get("/buscarLeadsLista/", function (req, res) {
     dashboardController.buscarLeadsLista(req, res);
 });
 
+router.put("/atualizarStatus/", function (req, res) {
+    dashboardController.atualizarStatus(req, res);
+});
 
+router.get("/dadosKpis/", function (req, res) {
+    dashboardController.dadosKpis(req, res);
+});
 
 
 module.exports = router;

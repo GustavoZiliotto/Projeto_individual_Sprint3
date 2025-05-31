@@ -9,18 +9,19 @@
 </head>
 
 <body class="grid">
+  
 
 
   <div class="kpi_container">
-    <div class="kpi_filho">a</div>
-    <div class="kpi_filho">a</div>
-    <div class="kpi_filho">a</div>
-    <div class="kpi_filho">a</div>
+    <div id="kpi1" class="kpi_filho">Total de leads: </div>
+    <div id="kpi2" class="kpi_filho">Total de leads sem cotações: </div>
+    <div id="kpi3" class="kpi_filho">Total de leads sem apolice: </div>
+    <div id="kpi4" class="kpi_filho">Ultima atualização da pagina: </div>
 
 
   </div>
 
-  <div class="header cabeçalho"></div>
+  <div class="header loginECadastro"><u><span style="margin-right: 40px;" class="seta">Sair da area logada</span></u></div>
 
   <div class="sidebar">
 
@@ -39,14 +40,26 @@
   <div class="lista_container">
     <div class="lista"> <br>
       <h3>Solicitações</h3> <br> <br>
-      <table border="solid" class="tabelaDashboard" id="tabela">        
+      <table border="solid" class="tabelaDashboard" id="tabela"></table>    
         <br> <br>
-        <button onclick="poximaLista()">></button> 
-        <button onclick="anteriorLista()"><</button>
+        <div>
+        <img src="assets/seta_voltar.png" onclick="anteriorLista()" height="25px" class="seta">
+        <img src="assets/seta_proximo.png" onclick="poximaLista()" height="25px" class="seta">
         <br> <br>
-        <button onclick="enviarAlteracoes()">Enviar Alterações no status do lead</button>
+        <button onclick="enviarAlteracoes()" class="input">Enviar Alterações no status dos leads atuais</button>
+        </div>
     </div>
   </div>
+
+
+  <div class="footer footerDashboard">
+        <div class="container">
+            <h4>Feito com amor por aluno &hearts; SPTech &copy; 2025</h4>
+            <span class="version">v1.0.0</span>
+        </div>
+    </div>
+  
+  
 
 
 
@@ -55,18 +68,28 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-
+  
   
   function sair() {
     window.location.href = "login.html"
   }
-
+  
   onload = function () {
     graficoBarra()
     graficoPizza()
     lista()
-  }
+    buscarDadosKpi()
 
+
+var data = new Date();
+var dia = data.getDate();
+var mes = data.getMonth() + 1;
+var ano = data.getFullYear();
+var horas = data.getHours();
+var minutos = data.getMinutes();
+
+kpi4.innerHTML += `${dia}/${mes}/${ano} - ${horas}:${minutos}`;
+  }
 
   var leads = {
   id: [],
@@ -145,9 +168,9 @@
         </thead>
         <tbody>
     `
-    let i = pagLista * 5
-    let fim = i + 5
-    while(i<fim){
+    let comeco = pagLista * 5
+    let fim = Math.min(comeco + 5, leads.id.length)
+    for(i=comeco; i< fim; i++){
       listaExibir += `
       <tr>
             <td>${leads.data[i]}</td>
@@ -160,37 +183,47 @@
             
       if(leads.cotacao[i] == 'A'){
         listaExibir += `
-        <input type="radio" name="cotação${[i]}" value="A" checked>Auto <br>
+        <input type="radio" name="cotação${[i]}" value="A" checked id="ca${i}">Auto <br>
         `
       } else {
-       listaExibir += `<input type="radio" name="cotação${[i]}" value="A" >Auto <br>`
+       listaExibir += `<input type="radio" name="cotação${[i]}" value="A" id="ca${i}" >Auto <br>`
       }
               
       if(leads.cotacao[i] == 'S'){
         listaExibir += `
-              <input type="radio" name="cotação${[i]}" value="S" checked >Saúde <br>`
+              <input type="radio" name="cotação${[i]}" value="S" checked  id="cs${i}">Saúde <br>`
       }else{
          listaExibir += `
-              <input type="radio" name="cotação${[i]}" value="S">Saúde <br>`
+              <input type="radio" name="cotação${[i]}" value="S" id="cs${i}">Saúde <br>`
       }
       
       if(leads.cotacao[i] == 'AS'){
         listaExibir += `
-        <input type="radio" name="cotação${[i]}" value="AS" checked >Saúde <br>
+        <input type="radio" name="cotação${[i]}" value="AS" checked id="cas${i}">Saúde e Auto <br>
         `
       } else{
         listaExibir += `
-        <input type="radio" name="cotação${[i]}" value="AS"  >Saúde <br>
+        <input type="radio" name="cotação${[i]}" value="AS" id="cas${i}">Saúde e Auto <br>
         `
       }
 
       if(leads.cotacao[i] == 'O'){
         listaExibir += `
-         <input type="radio" name="cotação${[i]}" value="O" checked>Outros <br>
+         <input type="radio" name="cotação${[i]}" value="O" checked id="co${i}">Outros <br>
         `
       } else{
         listaExibir += `
-        <input type="radio" name="cotação${[i]}" value="O">Outros <br>
+        <input type="radio" name="cotação${[i]}" value="O" id="co${i}">Outros <br>
+        `
+      }
+
+      if(leads.cotacao[i] == 'N'){
+        listaExibir += `
+        <input type="radio" name="cotação${[i]}" value="N" checked> Nenhum <br>
+        `
+      } else {
+        listaExibir += `
+        <input type="radio" name="cotação${[i]}" value="N"> Nenhum <br>
         `
       }
 
@@ -199,44 +232,54 @@
 
       if(leads.apolice[i] == 'A'){
         listaExibir += `
-        <input type="radio" name="apolice${[i]}" value="A" checked>Auto <br>
+        <input type="radio" name="apolice${[i]}" value="A" checked id="aa${i}">Auto <br>
         `
       } else {
         listaExibir += `
-        <input type="radio" name="apolice${[i]}" value="A">Auto <br>
+        <input type="radio" name="apolice${[i]}" value="A" id="aa${i}">Auto <br>
         `
       }
 
       if(leads.apolice[i] == 'S'){
         listaExibir += `
-        <input type="radio" name="apolice${[i]}" value="S" checked>Saúde <br>
+        <input type="radio" name="apolice${[i]}" value="S" checked id="as${i}">Saúde <br>
         `
       } else {
          listaExibir += `
-        <input type="radio" name="apolice${[i]}" value="S">Saúde <br>
+        <input type="radio" name="apolice${[i]}" value="S" id="as${i}">Saúde <br>
         `
       }
 
       if(leads.apolice[i] == 'AS'){
         listaExibir += `
-        <input type="radio" name="apolice${[i]}" value="AS" checked >Saúde <br>
+        <input type="radio" name="apolice${[i]}" value="AS" checked id="aas${i}">Saúde e Auto <br>
         `
       } else{
         listaExibir += `
-        <input type="radio" name="apolice${[i]}" value="AS"  >Saúde <br>
+        <input type="radio" name="apolice${[i]}" value="AS" id="aas${i}" >Saúde e Auto <br>
         `
       }
 
       if(leads.apolice[i] == 'O'){
         listaExibir += `
-        <input type="radio" name="apolice${[i]}" value="O" checked>Outros <br>
+        <input type="radio" name="apolice${[i]}" value="O" checked id="ao${i}">Outros <br>
         `
       } else {
          listaExibir += `
-        <input type="radio" name="apolice${[i]}" value="O">Outros <br>
+        <input type="radio" name="apolice${[i]}" value="O" id="ao${i}">Outros <br>
         `
       }
-      i++
+
+      if(leads.apolice[i] == 'N'){
+        listaExibir += `
+        <input type="radio" name="apolice${[i]}" value="N" checked> Nenhum <br>
+        `
+      } else {
+        listaExibir += `
+        <input type="radio" name="apolice${[i]}" value="N"> Nenhum <br>
+        `
+      }
+      
     }
     tabela.innerHTML = listaExibir
   }
@@ -245,34 +288,78 @@
     apolices: []
   }
   function enviarAlteracoes(){
-       for(let i = 0; i < leads.id.length;i++){
-        var radioCotacaoAtual = document.getElementsByName(`cotacao${i}`).val
-        for(let j =0; j < radioCotacaoAtual.length; j++){
-          if(radioCotacaoAtual[j] != )
-        }
-       }
-       /*
-        fetch(`/dashboard/atualizar/${sessionStorage.getItem("ID_POSTAGEM_EDITANDO")}`, {
+    let comeco = pagLista * 5
+    let fim = Math.min(comeco + 5, leads.id.length)
+
+    alteracoes.cotacoes = [];
+    alteracoes.apolices = [];
+    let idsPagina = [];
+
+    for(let i = comeco; i < fim;i++){
+
+var cotacaoSaude = document.getElementById(`cs${i}`).checked;
+var cotacaoAuto = document.getElementById(`ca${i}`).checked;
+var cotacaoAmbos = document.getElementById(`cas${i}`).checked;
+var cotacaoOutros= document.getElementById(`co${i}`).checked;
+
+if(cotacaoSaude){
+  alteracoes.cotacoes.push('S')
+} else if (cotacaoAuto){
+  alteracoes.cotacoes.push('A')
+} else if (cotacaoAmbos){
+  alteracoes.cotacoes.push('AS')
+} else if (cotacaoOutros){
+  alteracoes.cotacoes.push('O')
+} else {
+    alteracoes.cotacoes.push('N')
+}
+
+
+var apoliceSaude = document.getElementById(`as${i}`).checked;
+var apoliceAuto = document.getElementById(`aa${i}`).checked;
+var apoliceAmbos = document.getElementById(`aas${i}`).checked;
+var apoliceOutros = document.getElementById(`ao${i}`).checked;
+
+if(apoliceSaude){
+  alteracoes.apolices.push('S')
+} else if (apoliceAuto){
+  alteracoes.apolices.push('A')
+} else if (apoliceAmbos){
+  alteracoes.apolices.push('AS')
+} else if (apoliceOutros){
+  alteracoes.apolices.push('O')
+} else {
+  alteracoes.apolices.push('N')
+}
+
+  idsPagina.push(leads.id[i]);
+
+}
+
+       
+        fetch(`/dashboard/atualizarStatus/?usuario=${sessionStorage.ID_USUARIO}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                descricao: textarea_descricao.value
+            cotacoes: alteracoes.cotacoes,
+            apolices: alteracoes.apolices,
+            ids: idsPagina
             })
         }).then(function (resposta) {
 
             if (resposta.ok) {
-                window.alert("Post atualizado com sucesso pelo usuario de email: " + sessionStorage.getItem("EMAIL_USUARIO") + "!");
-                window.location = "/dashboard/mural.html"
+                alert("Leads atuaalizados com sucesso");
+            
             } else if (resposta.status == 404) {
-                window.alert("Deu 404!");
+                alert("Deu 404!");
             } else {
                 throw ("Houve um erro ao tentar realizar a postagem! Código da resposta: " + resposta.status);
             }
         }).catch(function (resposta) {
             console.log(`#ERRO: ${resposta}`);
-        });*/
+        });
     }
   
 
@@ -355,19 +442,20 @@ function graficoPizza() {
             let cotacoes_enviadas = resposta.map(item => item.cotacoes_enviadas);
             let apolices_saude = resposta.map(item => item.apolices_saude);
             let apolices_auto = resposta.map(item => item.apolices_auto);
+            let apolices_ambos =  resposta.map(item => item.apolices_ambos);
             let apolices_outros = resposta.map(item => item.apolices_outros)
 
 
             console.log('passou do fetch do grafico de pizza');
 
-            criarGraficoPizza(cotacoes_enviadas[0], apolices_saude[0],apolices_auto[0],apolices_outros[0]);
+            criarGraficoPizza(cotacoes_enviadas[0], apolices_saude[0],apolices_auto[0],apolices_outros[0], apolices_ambos[0]);
           });
         }
       });
   }
 
 
-  function criarGraficoPizza(cotacoes_enviadas, apolices_saude,apolices_auto,apolices_outros){
+  function criarGraficoPizza(cotacoes_enviadas, apolices_saude,apolices_auto,apolices_outros, apolices_ambos){
 
 
 
@@ -376,15 +464,16 @@ function graficoPizza() {
     new Chart(ctx2, {
       type: 'pie',
       data: {
-        labels: ['cotações sem retorno', 'vendas de saúde', 'vendas de auto', 'vendas em outros ramos'],
+        labels: ['cotações sem retorno', 'vendas de saúde', 'vendas de auto', 'vendas em outros ramos', 'vendas saúde + auto'],
         datasets: [
           {
-            data:[cotacoes_enviadas, apolices_saude,apolices_auto, apolices_outros ],
+            data:[cotacoes_enviadas, apolices_saude,apolices_auto, apolices_outros,apolices_ambos ],
             backgroundColor: [
               '#ff0000',
               '#4547FF',
               '#4B0082',
-              '#40E0D0'
+              '#40E0D0',
+              '#DAA520'
             ]
           }
         ]
@@ -394,6 +483,30 @@ function graficoPizza() {
       }
     });
   }
+
+  function buscarDadosKpi(){
+    fetch(`/dashboard/dadosKpis?usuario=${sessionStorage.ID_USUARIO}`, { cache: 'no-store' })
+    .then(function (response) {
+        if (response.ok) {
+          response.json().then(function (resposta) {
+            console.log(resposta)
+            let total_leads = resposta.map(item => item.total_leads);
+            let sem_cotacao = resposta.map(item => item.sem_cotacao);
+            let sem_apolice = resposta.map(item => item.sem_apolice);
+            console.log('passou do fetch das KPIs',total_leads,sem_cotacao,sem_apolice );
+            montarKpis(total_leads[0],sem_cotacao[0],sem_apolice[0])
+          });
+        }
+      });
+  }
+
+  function montarKpis(total_leads,sem_cotacao,sem_apolice){
+          kpi1.innerHTML += total_leads
+            kpi2.innerHTML += sem_cotacao
+            kpi3.innerHTML += sem_apolice
+
+  }
+  
 </script>
 
 </html>

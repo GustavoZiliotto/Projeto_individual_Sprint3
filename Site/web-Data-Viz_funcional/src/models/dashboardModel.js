@@ -18,7 +18,7 @@ var instrucaoSql = `
   select 
     month(data) as mes,
     count(case 
-    when cotacao in ('S', 'A', 'O') then 1
+    when cotacao in ('S', 'A', 'O', 'AS') then 1
      end) as cotacoes_enviadas,
     count(id) as lead_recebidos
   from leads
@@ -40,8 +40,8 @@ function buscarLeadsPizza(usuario) {
   `
  select
 count(case
-when cotacao in ('S', 'A', 'O') and 
-apolice is null then 1
+when cotacao in ('S', 'A', 'O', 'AS') and 
+apolice = 'N' then 1
 end
 ) as cotacoes_enviadas,
 count(case
@@ -55,7 +55,11 @@ end) as apolices_auto,
 count(case
 when apolice = 'O'
 then 1
-end) as apolices_outros
+end) as apolices_outros,
+count(case
+when apolice = 'AS'
+then 1
+end) as apolices_ambos
 from leads
 where fkusuario = ${usuario}
 ;
@@ -79,14 +83,55 @@ function buscarLeadsLista(usuario){
   apolice
   from leads
   where fkusuario = ${usuario}
-  order by data desc
   `
   console.log("Executando a instrução SQL: \n" + instrucaoSql);
   return database.executar(instrucaoSql);
 }
 
+function atualizarStatus(statusCotacao, statusApolice, idReferencia){
+
+
+  for(i=0;i<idReferencia.length;i++){
+   
+    instrucaoSql =
+  `
+  update leads
+  set cotacao = '${statusCotacao[i]}',
+  apolice = '${statusApolice[i]}'
+  where id = '${idReferencia[i]}';
+  `
+  database.executar(instrucaoSql)
+}
+console.log("Executando a instrução SQL: \n" + instrucaoSql);
+  return ;
+}
+
+function dadosKpis(usuario){
+  var instrucaoSql =
+  `select 
+count(id) as total_leads,
+count(
+case
+ when cotacao = 'N'
+then 1
+end) as sem_cotacao,
+count(
+case
+when apolice = 'N'
+then 1
+end) as sem_apolice
+from leads
+where fkusuario = ${usuario}`
+
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     buscarLeads,
     buscarLeadsPizza,
-    buscarLeadsLista
+    buscarLeadsLista,
+    atualizarStatus,
+    dadosKpis
 }

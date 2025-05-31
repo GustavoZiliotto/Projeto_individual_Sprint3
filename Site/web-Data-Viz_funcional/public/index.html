@@ -11,7 +11,7 @@
 <body>
     <header class="cabeçalho">
         <div class="loginECadastro">
-            <span style="margin-right: 40px;" onclick="funcLogin()">Acesso corretor</span>
+            <u><span style="margin-right: 40px;" onclick="funcLogin()" class="seta">Acesso corretor</span></u>
         </div>
     </header>
     <div class="conteudo conteudo1"
@@ -70,7 +70,7 @@
             <input class="input" type="text" placeholder="E-mail para contato" id="ipt_email"> <br>
             <input class="input" type="text" placeholder="Mensagem da solicitação" id="ipt_mensage"> <br>
             <input class="input" type="number" placeholder="Idade" id="ipt_idade"> <br>
-            <button class="input" onclick="enviarCotacao()">Solicitar cotação</button>
+            <button class="input seta" onclick="enviarCotacao()">Solicitar cotação</button>
         </div>
 
 
@@ -215,7 +215,7 @@
             preco3 = 'R$ 1.556,69';
         } else{
             preco3 = 'R$ 1.556,69';
-            alert (`Devido a idade de ${idade} ser superior a 70 ano, seu plano está sujeito a condições especiais para a aceitação
+            alert (`Devido a idade digitada ser superior a 70 ano, seu plano está sujeito a condições especiais para a aceitação
             Aguarde o contato para mais informações`)
         }
 
