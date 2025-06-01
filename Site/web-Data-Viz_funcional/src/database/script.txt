@@ -1,3 +1,28 @@
+create database projeto_indi_sprint3;
+use projeto_indi_sprint3;
+
+
+create table usuario (
+id int primary key auto_increment,
+codigo varchar (50),
+email varchar (50),
+cpf varchar(50),
+senha varchar(50),
+unique (codigo));
+
+create table leads (
+id int primary key auto_increment,
+data datetime default current_timestamp,
+nome varchar (70),
+celular varchar (20),
+email varchar (50),
+mensagem varchar (400),
+idade varchar(3),
+cotacao varchar (2) default 'N',
+apolice varchar (2) default 'N',
+fkusuario int,
+foreign key (fkusuario) references usuario (id));
+
 insert into usuario (codigo, email, cpf, senha)
 values 
 ('v9991j', 'admin@email.com', '12345678900', '1234567'),
