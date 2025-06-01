@@ -83,6 +83,7 @@ function buscarLeadsLista(usuario){
   apolice
   from leads
   where fkusuario = ${usuario}
+  order by id desc
   `
   console.log("Executando a instrução SQL: \n" + instrucaoSql);
   return database.executar(instrucaoSql);
@@ -100,10 +101,10 @@ function atualizarStatus(statusCotacao, statusApolice, idReferencia){
   apolice = '${statusApolice[i]}'
   where id = '${idReferencia[i]}';
   `
-  database.executar(instrucaoSql)
+  ultimaVolta = database.executar(instrucaoSql)
 }
 console.log("Executando a instrução SQL: \n" + instrucaoSql);
-  return ;
+  return ultimaVolta;
 }
 
 function dadosKpis(usuario){

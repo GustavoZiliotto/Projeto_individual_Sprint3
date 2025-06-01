@@ -208,6 +208,11 @@
         background-size: cover;
     }
 
+    .voltar{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    }
 
 
     /* -------------------- Dashboard -------------------------------- */

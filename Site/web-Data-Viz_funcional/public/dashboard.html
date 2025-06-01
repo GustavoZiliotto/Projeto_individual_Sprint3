@@ -21,7 +21,7 @@
 
   </div>
 
-  <div class="header loginECadastro"><u><span style="margin-right: 40px;" class="seta">Sair da area logada</span></u></div>
+  <div class="header loginECadastro"><u><span style="margin-right: 40px;" class="seta" onclick="sair()">Sair da area logada</span></u></div>
 
   <div class="sidebar">
 
@@ -351,6 +351,7 @@ if(apoliceSaude){
 
             if (resposta.ok) {
                 alert("Leads atuaalizados com sucesso");
+                window.location.reload()
             
             } else if (resposta.status == 404) {
                 alert("Deu 404!");

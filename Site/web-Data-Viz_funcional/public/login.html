@@ -7,12 +7,13 @@
     <title>Login</title>
 </head>
 <body class="box fundo_login">
+<div class="voltar seta" onclick="index()"><img src="assets/seta_voltar_branco.png" height="100px"></div>
 <div class="card_login">
     <span class="texto_titulo">Realize seu login</span><br>
     <input class="input" placeholder="susep" type="text" id="ipt_codigo"><br>
     <input class="input" placeholder="senha" type="text" id="ipt_senha"><br>
-    <button class="input" id="button_login" onclick="entrar()">Realizar Login</button>
-    <label for="button_login" onclick="telaCadastro()" style="color: blue;">Criar conta</label>
+    <button class="input seta" id="button_login" onclick="entrar()">Realizar Login</button>
+    <label for="button_login" class="seta" onclick="telaCadastro()" style="color: blue;">Criar conta</label>
 </div>
 </body>
 
@@ -30,6 +31,9 @@
 </html>
 
 <script>
+function index(){
+  window.location.href = "index.html"
+  }
 
 function telaCadastro() {
      window.location.href = "cadastro.html"

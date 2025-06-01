@@ -7,6 +7,8 @@
     <title>Login</title>
 </head>
 <body class="box fundo_login">
+<div class="voltar seta" onclick="index()"><img src="assets/seta_voltar_branco.png" height="100px"></div>
+
 <div class="card_login">
     <span class="texto_titulo">Realize seu cadastro</span><br>
     <input class="input" placeholder="email" type="text" id="ipt_email"> <br>
@@ -14,11 +16,14 @@
     <input class="input" placeholder="cpf" type="text" id="ipt_cpf"><br>
     <input class="input" placeholder="senha" type="password" id="ipt_senha"><br>
     <input class="input" placeholder="confirmar senha" type="password" id="ipt_senha2"><br>
-    <button class="input" id="button_login" onclick="cadastrar()">Criar conta</button>
-    <span onclick="login()" style="color: blue;">Realizar login</span>
+    <button class="input seta" id="button_login" onclick="cadastrar()">Criar conta</button>
+    <span onclick="login()" class="seta" style="color: blue;">Realizar login</span>
 </div>
 </body>
 <script>
+  function index(){
+    window.location.href = "index.html"
+  }
     function login() {
      window.location.href = "login.html"
     }
