@@ -76,6 +76,22 @@
       setInterval(sumirMensagem, 5000);
     }
 
+    if(emailVar.includes('@' && '.')){
+    }else {
+    alert("Seu email deve conter @ e .");
+
+      finalizarAguardar();
+      return false;
+    }
+
+    if(senhaVar < 7){
+    }else{
+      alert("Sua senha deve ter no minimo 7 caracteres");
+
+      finalizarAguardar();
+      return false;
+    }
+
     // Verificando se o código de ativação é de alguma empresa cadastrada 
 
     var contador = 0;
