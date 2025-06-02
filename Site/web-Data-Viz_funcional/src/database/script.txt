@@ -33,15 +33,15 @@ values
 
 insert into leads (data, nome, celular, email, mensagem, idade, cotacao, apolice, fkusuario)
 values 
-('2025-01-10 14:30:00', 'João Silva', '11999999999', 'joao@email.com', 'Quero um seguro de vida.', '30', 'S', null, 1),
+('2025-01-10 14:30:00', 'João Silva', '11999999999', 'joao@email.com', 'Quero um seguro de vida.', '30', 'S', 'N', 1),
 ('2025-02-15 10:00:00', 'Maria Souza', '11988888888', 'maria@email.com', 'Estou interessada em seguro saúde.', '42', 'S', 'S', 1),
 ('2025-03-05 09:15:00', 'Carlos Lima', '11977777777', 'carlos@email.com', 'Seguro do carro.', '37', 'A', 'A', 1),
 ('2025-04-12 13:45:00', 'Ana Dias', '11966666666', 'ana@email.com', 'Preciso de seguro residencial.', '29', 'O', 'O', 1),
-('2025-05-20 16:30:00', 'Felipe Ramos', '11955555555', 'felipe@email.com', 'Quero cotação para seguro viagem.', '35', 'S', null, 1),
+('2025-05-20 16:30:00', 'Felipe Ramos', '11955555555', 'felipe@email.com', 'Quero cotação para seguro viagem.', '35', 'S', 'N', 1),
 ('2025-05-21 11:10:00', 'Beatriz Nunes', '11944444444', 'beatriz@email.com', 'Cotação e contrato de seguro saúde.', '50', 'S', 'S', 1),
 ('2025-05-25 08:50:00', 'Ricardo Gomes', '11933333333', 'ricardo@email.com', 'Fechei o seguro do carro.', '41', 'A', 'A', 1),
-('2025-06-02 14:00:00', 'Tiago Alves', '11922221111', 'tiago@email.com', 'Interesse em seguro viagem.', '33', 'S', null, 2),
+('2025-06-02 14:00:00', 'Tiago Alves', '11922221111', 'tiago@email.com', 'Interesse em seguro viagem.', '33', 'S', 'N', 2),
 ('2025-06-05 09:30:00', 'Patrícia Rocha', '11911112222', 'patricia@email.com', 'Fechamento de seguro saúde.', '45', 'S', 'S', 3),
 ('2025-07-10 12:45:00', 'Bruno Fernandes', '11900001111', 'bruno@email.com', 'Contratei seguro do meu carro.', '38', 'A', 'A', 4),
 ('2025-08-18 17:10:00', 'Renata Melo', '11933334444', 'renata@email.com', 'Seguro empresarial contratado.', '47', 'O', 'O', 5),
-('2025-08-22 10:20:00', 'Gustavo Lima', '11955556666', 'gustavo@email.com', 'Solicitando cotação para seguro residencial.', '36', 'S', null, 2);
+('2025-08-22 10:20:00', 'Gustavo Lima', '11955556666', 'gustavo@email.com', 'Solicitando cotação para seguro residencial.', '36', 'S', 'N', 2);
