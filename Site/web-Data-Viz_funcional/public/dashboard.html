@@ -88,17 +88,17 @@ var horas = data.getHours();
 var minutos = data.getMinutes();
 kpi4.innerHTML += `${dia}/${mes}/${ano} - ${horas}:${minutos}`;
   }
-  var leads = {
-  id: [],
-  data: [],
-  nome: [],
-  celular: [],
-  email: [],
-  mensagem: [],
-  idade: [],
-  cotacao: [],
-  apolice: []
-}
+  
+ var id = []
+  var data = []
+  nome = []
+  celular = []
+  email = []
+  mensagem = []
+  idade= []
+  cotacao= []
+  apolice= []
+
 
   function lista (){
 
@@ -108,18 +108,27 @@ kpi4.innerHTML += `${dia}/${mes}/${ano} - ${horas}:${minutos}`;
           response.json().then(function (resposta) {
             console.log(resposta)
             console.log(`Dados recebidos da lista: ${JSON.stringify(resposta)}`);
-            leads = {
-             id: resposta.map(item => item.id),
-             data: resposta.map(item => item.data),
-             nome: resposta.map(item => item.nome),
-             celular: resposta.map(item => item.celular),
-             email: resposta.map(item => item.email),
-             mensagem: resposta.map(item => item.mensagem),
-             idade: resposta.map(item => item.idade),
-             cotacao: resposta.map(item => item.cotacao),
-             apolice: resposta.map(item => item.apolice)}
+
+            for(let i =0; i < resposta; i++){
+
+               id.push(resposta[i].id)
+               data.push (resposta[i].data)
+               nome.push(resposta[i].nome)
+               celular.push(resposta[i].celular)
+               email.push(resposta[i].email)
+               mensagem.push(resposta[i].mensagem)
+               idade.push(resposta[i].idade)
+               cotacao.push(resposta[i].cotacao)
+               apolice.push(resposta[i].apolice)
+              
+              }
+            
+            
+
 
             console.log('passou do fetch da lista');
+            console.log(leads);
+            
             criarLista()
 
           });
@@ -128,7 +137,7 @@ kpi4.innerHTML += `${dia}/${mes}/${ano} - ${horas}:${minutos}`;
   }
   var pagLista = 0
   function poximaLista(){
-    if((pagLista * 5) + 4 < leads.nome.length){
+    if((pagLista * 5) + 4 < nome.length){
       pagLista ++
 
       criarLista()
@@ -167,19 +176,19 @@ kpi4.innerHTML += `${dia}/${mes}/${ano} - ${horas}:${minutos}`;
         <tbody>
     `
     let comeco = pagLista * 5
-    let fim = Math.min(comeco + 5, leads.id.length)
+    let fim = Math.min(comeco + 5, id.length)
     for(i=comeco; i< fim; i++){
       listaExibir += `
       <tr>
-            <td>${leads.data[i]}</td>
-            <td>${leads.nome[i]}</td>
-            <td>${leads.celular[i]}</td>
-            <td>${leads.email[i]}</td>
-            <td>${leads.mensagem[i]}</td>
-            <td>${leads.idade[i]}</td>
+            <td>${data[i]}</td>
+            <td>${nome[i]}</td>
+            <td>${celular[i]}</td>
+            <td>${email[i]}</td>
+            <td>${mensagem[i]}</td>
+            <td>${idade[i]}</td>
             <td>`
             
-      if(leads.cotacao[i] == 'A'){
+      if(cotacao[i] == 'A'){
         listaExibir += `
         <input type="radio" name="cotação${[i]}" value="A" checked id="ca${i}">Auto <br>
         `
@@ -187,7 +196,7 @@ kpi4.innerHTML += `${dia}/${mes}/${ano} - ${horas}:${minutos}`;
        listaExibir += `<input type="radio" name="cotação${[i]}" value="A" id="ca${i}" >Auto <br>`
       }
               
-      if(leads.cotacao[i] == 'S'){
+      if(cotacao[i] == 'S'){
         listaExibir += `
               <input type="radio" name="cotação${[i]}" value="S" checked  id="cs${i}">Saúde <br>`
       }else{
@@ -195,7 +204,7 @@ kpi4.innerHTML += `${dia}/${mes}/${ano} - ${horas}:${minutos}`;
               <input type="radio" name="cotação${[i]}" value="S" id="cs${i}">Saúde <br>`
       }
       
-      if(leads.cotacao[i] == 'AS'){
+      if(cotacao[i] == 'AS'){
         listaExibir += `
         <input type="radio" name="cotação${[i]}" value="AS" checked id="cas${i}">Saúde e Auto <br>
         `
@@ -205,7 +214,7 @@ kpi4.innerHTML += `${dia}/${mes}/${ano} - ${horas}:${minutos}`;
         `
       }
 
-      if(leads.cotacao[i] == 'O'){
+      if(cotacao[i] == 'O'){
         listaExibir += `
          <input type="radio" name="cotação${[i]}" value="O" checked id="co${i}">Outros <br>
         `
@@ -215,7 +224,7 @@ kpi4.innerHTML += `${dia}/${mes}/${ano} - ${horas}:${minutos}`;
         `
       }
 
-      if(leads.cotacao[i] == 'N'){
+      if(cotacao[i] == 'N'){
         listaExibir += `
         <input type="radio" name="cotação${[i]}" value="N" checked> Nenhum <br>
         `
@@ -228,7 +237,7 @@ kpi4.innerHTML += `${dia}/${mes}/${ano} - ${horas}:${minutos}`;
       listaExibir += `</td>
             <td>`
 
-      if(leads.apolice[i] == 'A'){
+      if(apolice[i] == 'A'){
         listaExibir += `
         <input type="radio" name="apolice${[i]}" value="A" checked id="aa${i}">Auto <br>
         `
@@ -238,7 +247,7 @@ kpi4.innerHTML += `${dia}/${mes}/${ano} - ${horas}:${minutos}`;
         `
       }
 
-      if(leads.apolice[i] == 'S'){
+      if(apolice[i] == 'S'){
         listaExibir += `
         <input type="radio" name="apolice${[i]}" value="S" checked id="as${i}">Saúde <br>
         `
@@ -248,7 +257,7 @@ kpi4.innerHTML += `${dia}/${mes}/${ano} - ${horas}:${minutos}`;
         `
       }
 
-      if(leads.apolice[i] == 'AS'){
+      if(apolice[i] == 'AS'){
         listaExibir += `
         <input type="radio" name="apolice${[i]}" value="AS" checked id="aas${i}">Saúde e Auto <br>
         `
@@ -258,7 +267,7 @@ kpi4.innerHTML += `${dia}/${mes}/${ano} - ${horas}:${minutos}`;
         `
       }
 
-      if(leads.apolice[i] == 'O'){
+      if(apolice[i] == 'O'){
         listaExibir += `
         <input type="radio" name="apolice${[i]}" value="O" checked id="ao${i}">Outros <br>
         `
@@ -268,7 +277,7 @@ kpi4.innerHTML += `${dia}/${mes}/${ano} - ${horas}:${minutos}`;
         `
       }
 
-      if(leads.apolice[i] == 'N'){
+      if(apolice[i] == 'N'){
         listaExibir += `
         <input type="radio" name="apolice${[i]}" value="N" checked> Nenhum <br>
         `
@@ -287,7 +296,7 @@ kpi4.innerHTML += `${dia}/${mes}/${ano} - ${horas}:${minutos}`;
   }
   function enviarAlteracoes(){
     let comeco = pagLista * 5
-    let fim = Math.min(comeco + 5, leads.id.length)
+    let fim = Math.min(comeco + 5, id.length)
 
     alteracoes.cotacoes = [];
     alteracoes.apolices = [];
@@ -330,7 +339,7 @@ if(apoliceSaude){
   alteracoes.apolices.push('N')
 }
 
-  idsPagina.push(leads.id[i]);
+  idsPagina.push(id[i]);
 
 }
 
