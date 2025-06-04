@@ -241,8 +241,35 @@
         
          // Fetch para pegar o total de usuarios
                     console.log('Pré fetch buscar usuarios');
+
+         fetch(`/leads/verQuantidade`, { cache: 'no-store' })
+            .then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
                     
-        fetch(`/leads/verQuantidade`, { cache: 'no-store' })
+
+                     console.log('passou do fetch de agregar usuario', resposta);
+
+                     var qtdUsuario = resposta[0].numUsuarios
+
+                        var conta = Math.random() * (qtdUsuario - 1) + 1
+                        var receber = conta.toFixed(0)
+                        console.log('usuario recebendo', receber)
+                        enviarLead(nome,celular,email,mensagem,idade,receber)
+
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+        }
+    
+                    
+       /* fetch(`/leads/verQuantidade`, { cache: 'no-store' })
             .then(function (response) {
                 if (response.ok) {
                     response.json().then(function (resposta) {
@@ -260,7 +287,7 @@
                 }
             });
         
-        }
+        }*/
 
 
         function enviarLead(nome,celular,email,mensagem,idade,receber){    

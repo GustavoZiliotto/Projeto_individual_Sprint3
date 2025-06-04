@@ -80,17 +80,14 @@
     lista()
     buscarDadosKpi()
 
-
 var data = new Date();
 var dia = data.getDate();
 var mes = data.getMonth() + 1;
 var ano = data.getFullYear();
 var horas = data.getHours();
 var minutos = data.getMinutes();
-
 kpi4.innerHTML += `${dia}/${mes}/${ano} - ${horas}:${minutos}`;
   }
-
   var leads = {
   id: [],
   data: [],
@@ -110,6 +107,7 @@ kpi4.innerHTML += `${dia}/${mes}/${ano} - ${horas}:${minutos}`;
         if (response.ok) {
           response.json().then(function (resposta) {
             console.log(resposta)
+            console.log(`Dados recebidos da lista: ${JSON.stringify(resposta)}`);
             leads = {
              id: resposta.map(item => item.id),
              data: resposta.map(item => item.data),
